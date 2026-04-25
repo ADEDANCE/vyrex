@@ -4,6 +4,7 @@ type CardProps = {
   title?: string;
   subtitle: string;
   studentname?: string;
+  className?: string;
 };
 export default function Aboutcard({
   icon,
@@ -11,9 +12,14 @@ export default function Aboutcard({
   subtitle,
   image,
   studentname,
+  className,
 }: CardProps) {
   return (
-    <div className=" w-full shadow rounded-2xl border border-gray-200 bg-white py-4 px-4 text-start">
+    <div
+      className={`w-full shadow rounded-2xl border border-gray-200 bg-white py-4 px-4  flex flex-col  
+      ${className}
+    `}
+    >
       {icon && (
         <div className=" bg-linear-to-bl from-blue-500 to-blue-300 flex items-center justify-center rounded-xl py-2 w-10 h-10 px-2">
           {icon}

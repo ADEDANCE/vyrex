@@ -39,16 +39,19 @@ export default function About() {
 
         <div className=" flex gap-4 flex-col md:flex-row mt-3">
           <Aboutcard
+            className=" text-start"
             icon={<FaUser className="text-white text-xl" />}
             title="Mentorship"
             subtitle="Book 1:1 sessions with mentors to unlock your next creative level.."
           />
           <Aboutcard
+            className=" text-start"
             icon={<FaUser className="text-white text-xl" />}
             title="Project Files"
             subtitle="Download every project source so you can practice on real footage."
           />
           <Aboutcard
+            className=" text-start"
             icon={<FaUser className="text-white text-xl" />}
             title="Verified Certificates"
             subtitle="Showcase shareable certificates that prove your craft."
