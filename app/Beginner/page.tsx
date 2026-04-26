@@ -3,8 +3,22 @@
 import { CircleCheck } from "lucide-react";
 import Button from "../components/Button";
 import { MdOutlineSlowMotionVideo } from "react-icons/md";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
+type Lesson = {
+  id: number;
+  title: string;
+  videoUrl: string;
+  duration: string;
+  completed: boolean;
+  notes: string;
+  resources: string;
+};
+
+type Module = {
+  title: string;
+  lessons: Lesson[];
+};
 export default function page() {
   const modules = [
     {
@@ -169,10 +183,12 @@ export default function page() {
     },
   ];
 
-  const [currentLesson, setCurrentLesson] = useState(modules[0].lessons[0]);
+  const [currentLesson, setCurrentLesson] = useState<Lesson>(
+    modules[0].lessons[0],
+  );
 
   // mark completed state
-  const [courseModules, setCourseModules] = useState(modules);
+  const [courseModules, setCourseModules] = useState<Module[]>(modules);
 
   // mark completed logic
   const markAsCompleted = () => {
@@ -195,6 +211,7 @@ export default function page() {
     if (newLesson) {
       setCurrentLesson(newLesson);
     }
+    saveProgress(updated, currentLesson);
   };
   // next tutorial
   const goToNextLesson = () => {
@@ -208,13 +225,21 @@ export default function page() {
       if (lessonIndex !== -1) {
         //  Case 1: Next lesson exists in same module
         if (module.lessons[lessonIndex + 1]) {
-          setCurrentLesson(module.lessons[lessonIndex + 1]);
+          const nextLesson = module.lessons[lessonIndex + 1];
+
+          setCurrentLesson(nextLesson);
+          saveProgress(courseModules, nextLesson);
+
           return;
         }
 
         // Case 2: Move to next module
         if (courseModules[i + 1]) {
-          setCurrentLesson(courseModules[i + 1].lessons[0]);
+          const nextLesson = courseModules[i + 1].lessons[0];
+
+          setCurrentLesson(nextLesson);
+          saveProgress(courseModules, nextLesson);
+
           return;
         }
 
@@ -226,19 +251,48 @@ export default function page() {
   };
 
   // save progress
-  //   const saveProgress = (modules, currentLesson) => {
-  //   const completedLessons = modules
-  //     .flatMap((m) => m.lessons)
-  //     .filter((l) => l.completed)
-  //     .map((l) => l.id);
+  const saveProgress = (modules: Module[], currentLesson: Lesson) => {
+    const completedLessons = modules
+      .flatMap((m) => m.lessons)
+      .filter((l) => l.completed)
+      .map((l) => l.id);
 
-  //   const data = {
-  //     currentLessonId: currentLesson.id,
-  //     completedLessons,
-  //   };
+    const data = {
+      currentLessonId: currentLesson.id,
+      completedLessons,
+    };
 
-  //   localStorage.setItem("vyrex-progress", JSON.stringify(data));
-  // };
+    localStorage.setItem("vyrex-progress", JSON.stringify(data));
+  };
+
+  // Restore progress
+  useEffect(() => {
+    const saved = localStorage.getItem("vyrex-progress");
+
+    if (!saved) return;
+
+    const parsed = JSON.parse(saved);
+
+    // restore completed lessons
+    const updatedModules = modules.map((module) => ({
+      ...module,
+      lessons: module.lessons.map((lesson) => ({
+        ...lesson,
+        completed: parsed.completedLessons.includes(lesson.id),
+      })),
+    }));
+
+    setCourseModules(updatedModules);
+
+    // restore current lesson
+    const lesson = updatedModules
+      .flatMap((m) => m.lessons)
+      .find((l) => l.id === parsed.currentLessonId);
+
+    if (lesson) {
+      setCurrentLesson(lesson);
+    }
+  }, []);
 
   return (
     <section className=" bg-linear-to-b from-blue-200 to-blue-50 w-full py-10 px-4 ">
@@ -250,6 +304,10 @@ export default function page() {
           className="mt-7 rounded-lg w-full"
           src={currentLesson?.videoUrl}
           controls
+          controlsList="nodownload"
+          // prevent right click
+          onContextMenu={(e) => e.preventDefault()}
+          disablePictureInPicture
         />
 
         <div className=" flex gap-6 mt-7">
