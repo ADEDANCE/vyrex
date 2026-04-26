@@ -1,34 +1,274 @@
+"use client";
+
 import { CircleCheck } from "lucide-react";
 import Button from "../components/Button";
 import { MdOutlineSlowMotionVideo } from "react-icons/md";
+import { useState } from "react";
 
 export default function page() {
+  const modules = [
+    {
+      title: "Module 1",
+      lessons: [
+        {
+          id: 1,
+          title: "Welcome to VYREX",
+          videoUrl: "/welcome.mp4",
+          duration: "4:12",
+          completed: false,
+          notes: "Welcoming message",
+          resources: "file.pdf",
+        },
+        {
+          id: 2,
+          title: "Psychology of video editing",
+          videoUrl: "/welcome.mp4",
+          duration: "4:12",
+          completed: false,
+          notes:
+            "In this lesson we explore how great editors think. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          resources: "file.pdf",
+        },
+        {
+          id: 3,
+          title: "Video editing principle",
+          videoUrl: "/welcome.mp4",
+          duration: "9:12",
+          completed: false,
+          notes:
+            "In this lesson we explore Video editing principle. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          resources: "file.pdf",
+        },
+      ],
+    },
+
+    {
+      title: "Module 2",
+      lessons: [
+        {
+          id: 4,
+          title: "Intro to capcut 1",
+          videoUrl: "/welcome.mp4",
+          duration: "4:12",
+          completed: false,
+          notes: "Welcoming message",
+          resources: "file.pdf",
+        },
+        {
+          id: 5,
+          title: "Intro to capcut 2",
+          videoUrl: "/welcome.mp4",
+          duration: "12:12",
+          completed: false,
+          notes:
+            "In this lesson we explore how great editors think. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          resources: "file.pdf",
+        },
+      ],
+    },
+
+    {
+      title: "Module 3",
+      lessons: [
+        {
+          id: 6,
+          title: "Sourcing for resources 1",
+          videoUrl: "/welcome.mp4",
+          duration: "4:12",
+          completed: false,
+          notes: "Welcoming message",
+          resources: "file.pdf",
+        },
+        {
+          id: 7,
+          title: "Sourcing for resources 2",
+          videoUrl: "/welcome.mp4",
+          duration: "12:12",
+          completed: false,
+          notes:
+            "In this lesson we explore how great editors think. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          resources: "file.pdf",
+        },
+      ],
+    },
+
+    {
+      title: "Module 4",
+      lessons: [
+        {
+          id: 8,
+          title: "Video Scripting Formula",
+          videoUrl: "/welcome.mp4",
+          duration: "4:12",
+          completed: false,
+          notes: "Welcoming message",
+          resources: "file.pdf",
+        },
+        {
+          id: 9,
+          title: "Video Scripting",
+          videoUrl: "/welcome.mp4",
+          duration: "4:12",
+          completed: false,
+          notes:
+            "In this lesson we explore how great editors think. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          resources: "file.pdf",
+        },
+      ],
+    },
+
+    {
+      title: "Module 5",
+      lessons: [
+        {
+          id: 10,
+          title: "Slide Show 1",
+          videoUrl: "/welcome.mp4",
+          duration: "4:12",
+          completed: false,
+          notes: "Welcoming message",
+          resources: "file.pdf",
+        },
+        {
+          id: 11,
+          title: "Slide Show 2",
+          videoUrl: "/welcome.mp4",
+          duration: "4:12",
+          completed: false,
+          notes:
+            "In this lesson we explore how great editors think. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          resources: "file.pdf",
+        },
+      ],
+    },
+
+    {
+      title: "Module 6",
+      lessons: [
+        {
+          id: 12,
+          title: "Smart hub",
+          videoUrl: "/welcome.mp4",
+          duration: "9:12",
+          completed: false,
+          notes:
+            "In this lesson we explore Video editing principle. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          resources: "file.pdf",
+        },
+        {
+          id: 13,
+          title: "Smart hub",
+          videoUrl: "/welcome.mp4",
+          duration: "9:12",
+          completed: false,
+          notes:
+            "In this lesson we explore Video editing principle. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          resources: "file.pdf",
+        },
+      ],
+    },
+  ];
+
+  const [currentLesson, setCurrentLesson] = useState(modules[0].lessons[0]);
+
+  // mark completed state
+  const [courseModules, setCourseModules] = useState(modules);
+
+  // mark completed logic
+  const markAsCompleted = () => {
+    const updated = courseModules.map((module) => ({
+      ...module,
+      lessons: module.lessons.map((lesson) =>
+        lesson.id === currentLesson.id
+          ? { ...lesson, completed: true }
+          : lesson,
+      ),
+    }));
+
+    setCourseModules(updated);
+
+    // update currentLesson reference
+    const newLesson = updated
+      .flatMap((m) => m.lessons)
+      .find((l) => l.id === currentLesson.id);
+
+    if (newLesson) {
+      setCurrentLesson(newLesson);
+    }
+  };
+  // next tutorial
+  const goToNextLesson = () => {
+    for (let i = 0; i < courseModules.length; i++) {
+      const module = courseModules[i];
+
+      const lessonIndex = module.lessons.findIndex(
+        (l) => l.id === currentLesson.id,
+      );
+
+      if (lessonIndex !== -1) {
+        //  Case 1: Next lesson exists in same module
+        if (module.lessons[lessonIndex + 1]) {
+          setCurrentLesson(module.lessons[lessonIndex + 1]);
+          return;
+        }
+
+        // Case 2: Move to next module
+        if (courseModules[i + 1]) {
+          setCurrentLesson(courseModules[i + 1].lessons[0]);
+          return;
+        }
+
+        //  Case 3: End of course
+        alert("Course completed 🎉");
+        return;
+      }
+    }
+  };
+
+  // save progress
+  //   const saveProgress = (modules, currentLesson) => {
+  //   const completedLessons = modules
+  //     .flatMap((m) => m.lessons)
+  //     .filter((l) => l.completed)
+  //     .map((l) => l.id);
+
+  //   const data = {
+  //     currentLessonId: currentLesson.id,
+  //     completedLessons,
+  //   };
+
+  //   localStorage.setItem("vyrex-progress", JSON.stringify(data));
+  // };
+
   return (
     <section className=" bg-linear-to-b from-blue-200 to-blue-50 w-full py-10 px-4 ">
       <div className=" flex flex-col items-start ">
         <p className=" text-gray-600">Editing Foundations</p>
         <h2 className=" font-medium text-black text-2xl">Welcome to VYREX</h2>
 
-        <video className=" mt-7 rounded-lg w-full" src=""></video>
+        <video
+          className="mt-7 rounded-lg w-full"
+          src={currentLesson?.videoUrl}
+          controls
+        />
 
-        <div className=" flex gap-6">
+        <div className=" flex gap-6 mt-7">
           <Button
-            children="Mark as completed"
+            children={
+              currentLesson?.completed ? "Completed " : "Mark as completed"
+            }
+            onClick={markAsCompleted}
             className=" bg-linear-to-r from-blue-500 to-blue-300 rounded-xl"
           />
 
-          <Button children="Next lesson" />
+          <Button children="Next lesson" onClick={goToNextLesson} />
         </div>
 
         {/* lesson notes */}
         <div className=" mt-10 py-4 px-4 text-start border border-gray-200 shadow bg-white rounded-xl">
           <h3 className=" font-medium text-xl">Lesson notes</h3>
 
-          <p className=" text-gray-600">
-            In this lesson we explore setting up your workspace. Use the project
-            files in the resources tab, and remember: cuts are about emotion
-            before they're about technique.
-          </p>
+          <p className="text-gray-600">{currentLesson?.notes}</p>
 
           <Button children="Download resources" />
         </div>
@@ -37,158 +277,33 @@ export default function page() {
         <h3 className=" mt-8  text-gray-600 font-medium"></h3>
 
         {/* Module 1 */}
-        <div className=" mt-4 w-full">
-          <p className=" text-gray-600">Module 1 · The Editor's Mindset</p>
+        {courseModules.map((module, moduleIndex) => (
+          <div key={moduleIndex} className=" mt-4 w-full">
+            <p className=" text-gray-600">{module.title}</p>
 
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <CircleCheck className=" text-green-500" />
-              <p>Welcome to VYREX</p>
-            </div>
-            <p className=" text-gray-600">4:12</p>
+            {module.lessons.map((lesson) => (
+              <div
+                key={lesson.id}
+                onClick={() => setCurrentLesson(lesson)}
+                className={`flex justify-between cursor-pointer ${
+                  currentLesson?.id === lesson.id ? "bg-blue-100" : ""
+                }`}
+              >
+                <div className="flex gap-6 mb-2">
+                  {lesson.completed ? (
+                    <CircleCheck className="text-green-500 text-2xl" />
+                  ) : (
+                    <MdOutlineSlowMotionVideo className="text-2xl" />
+                  )}
+
+                  <p>{lesson.title}</p>
+                </div>
+
+                <p>{lesson.duration}</p>
+              </div>
+            ))}
           </div>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <CircleCheck className=" text-green-500" />
-              <p>Phycology of video editing</p>
-            </div>
-            <p className=" text-gray-600">12:30</p>
-          </div>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-              <p>Video editing principle</p>
-            </div>
-            <p className=" text-gray-600">9:15</p>
-          </div>
-        </div>
-
-        {/* Module 2 */}
-        <div className=" mt-4 w-full">
-          <p className=" text-gray-600">Module 2 · The Language of Cuts</p>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-
-              <p>Intro to capcut 1</p>
-            </div>
-            <p className=" text-gray-600">4:12</p>
-          </div>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-
-              <p>Intro to capcut 2</p>
-            </div>
-            <p className=" text-gray-600">12:30</p>
-          </div>
-        </div>
-
-        {/* Module 3 */}
-        <div className=" mt-4 w-full">
-          <p className=" text-gray-600">Module 3 · The Editor's Mindset</p>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-              <p>Sourcing for resources 1 </p>
-            </div>
-            <p className=" text-gray-600">4:12</p>
-          </div>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-              <p>Sourcing for resources 2 </p>
-            </div>
-            <p className=" text-gray-600">12:30</p>
-          </div>
-        </div>
-
-        {/* Module 4 */}
-        <div className=" mt-4 w-full">
-          <p className=" text-gray-600">Module 4 · The Editor's Mindset</p>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-              <p>Video Scripting Formula</p>
-            </div>
-            <p className=" text-gray-600">4:12</p>
-          </div>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-              <p>Video Scripting</p>
-            </div>
-            <p className=" text-gray-600">12:30</p>
-          </div>
-        </div>
-
-        {/* Module 5 */}
-        <div className=" mt-4 w-full">
-          <p className=" text-gray-600">Module 5 · The Editor's Mindset</p>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-              <p>Slide Show 1</p>
-            </div>
-            <p className=" text-gray-600">4:12</p>
-          </div>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-              <p>Slide Show 2</p>
-            </div>
-            <p className=" text-gray-600">12:30</p>
-          </div>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-              <p>Smart hub </p>
-            </div>
-            <p className=" text-gray-600">9:15</p>
-          </div>
-        </div>
-
-        {/* Module 6 */}
-        <div className=" mt-4 w-full">
-          <p className=" text-gray-600">Module 1 · The Editor's Mindset</p>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-              <p>Slide show 1 </p>
-            </div>
-            <p className=" text-gray-600">9:15</p>
-          </div>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-              <p>Slide show 2 </p>
-            </div>
-
-            <p className=" text-gray-600">12:30</p>
-          </div>
-
-          <div className=" flex justify-between">
-            <div className=" flex gap-6">
-              <MdOutlineSlowMotionVideo className=" text-gray-500 text-2xl" />
-              <p>Congratulattion And Encouragement Message </p>
-            </div>
-
-            <p className=" text-gray-600">9:15</p>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );
