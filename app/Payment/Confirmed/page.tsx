@@ -1,7 +1,14 @@
+"use client";
+
 import Button from "@/app/components/Button";
 import { LuCircleCheckBig } from "react-icons/lu";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function page() {
+  const searchParams = useSearchParams();
+  const level = searchParams.get("level");
+  const router = useRouter();
   return (
     <section className=" bg-linear-to-b from-blue-200 to-blue-50 w-full py-16 px-4 md:px-96">
       <div className=" flex flex-col items-center ">
@@ -16,7 +23,7 @@ export default function page() {
           </h2>
 
           <p className=" text-white text-lg">
-            Your course access has been unlocked
+            Your {level} course access has been unlocked
           </p>
 
           <div className=" py-4 px-4 bg-linear-to-bl from-blue-400 to-blue-200 shadow rounded-lg w-full flex flex-col items-center mt-7">
@@ -32,6 +39,7 @@ export default function page() {
 
           <Button
             children="Go to Dashboard"
+            onClick={() => router.push(`/course/${level}`)}
             className=" bg-white text-blue-600 rounded-xl mt-8"
           />
         </div>
