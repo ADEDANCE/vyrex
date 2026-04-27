@@ -1,5 +1,6 @@
 type ButtonProps = {
   children: React.ReactNode;
+  icon?: React.ReactNode;
   onClick?: () => void;
   className?: string;
   type?: "button" | "submit" | "reset";
@@ -7,6 +8,7 @@ type ButtonProps = {
 
 export default function Button({
   children,
+  icon,
   onClick,
   className,
   type = "button",
@@ -17,7 +19,7 @@ export default function Button({
       onClick={onClick}
       className={`px-4 py-2   transition ${className}`}
     >
-      {children}
+      {children} {icon}
     </button>
   );
 }
