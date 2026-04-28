@@ -36,7 +36,7 @@ export default function Signup() {
 
         {/* button */}
         <Button
-          onClick={() => router.push("/Payment")}
+          onClick={() => router.push("/Payment/beginner")}
           children="Create account"
           className=" bg-linear-to-r from-blue-500 to-blue-300 rounded-xl mt-6 w-full text-white"
         />
@@ -50,9 +50,9 @@ export default function Signup() {
         </div>
 
         {/* policy */}
-        <div className=" flex text-sm mt-3">
-          <p>By continuing you agree to VYREX </p>
-          <Link href={""} className=" text-blue-500 underline">
+        <div className=" flex flex-wrap text-xs md:mt-3">
+          <p>By continuing you agree to VYREX</p>
+          <Link href={""} className=" ml-1 text-blue-500 underline">
             Terms
           </Link>
           <p>and</p>
