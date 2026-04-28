@@ -97,8 +97,8 @@ export default function page() {
           return;
         }
 
-        //  Case 3: End of course
-        alert("Course completed ");
+        // //  Case 3: End of course
+        // alert("Course completed ");
         return;
       }
     }
@@ -173,7 +173,7 @@ export default function page() {
           </div>
         </div> */}
 
-        <div className=" flex gap-6 mt-7">
+        <div className=" flex flex-wrap gap-6 mt-7">
           <Button
             children={
               currentLesson?.completed ? "Completed " : "Mark as completed"
@@ -191,7 +191,7 @@ export default function page() {
 
           {isCourseCompleted && (
             <Button
-              onClick={() => router.push("/Beginner/Certificate")}
+              onClick={() => router.push(`/course/${level}/certificate`)}
               children="Claim Certificate"
               className=" bg-linear-to-r from-blue-500 to-blue-300 rounded-xl text-white font-medium"
             />
