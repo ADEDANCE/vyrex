@@ -85,7 +85,7 @@ export default function page() {
           </div>
 
           <div className=" pl-8">
-            <div className=" text-lg text-black flex gap-1 items-center">
+            <div className=" text-lg text-black flex gap-1 items-start">
               <p className=" font-bold text-blue-500">1.</p>
               <p>
                 Transfer the{" "}
@@ -101,8 +101,8 @@ export default function page() {
               <p>Wait for confirmation</p>
             </div>
 
-            <div className=" text-lg text-black flex gap-1 items-center mt-3">
-              <p className=" font-bold text-blue-500">2.</p>
+            <div className=" text-lg text-black flex gap-1 items-start mt-3">
+              <p className=" font-bold text-blue-500">3.</p>
               <p>
                 Once confirmed, your course access will be automatically
                 unlocked
