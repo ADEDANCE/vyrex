@@ -8,7 +8,7 @@ export default function Signup() {
   const router = useRouter();
   return (
     <section className=" bg-linear-to-b from-blue-200 to-blue-50">
-      <div className=" py-10 px-10 md:px-96 flex flex-col items-center">
+      <div className=" py-10 px-10 md:px-72 flex flex-col items-center">
         <h1 className=" font-bold text-3xl">Create your account</h1>
         <p className=" text-gray-600 text-xl">
           Start learning video editing today
@@ -36,7 +36,7 @@ export default function Signup() {
 
         {/* button */}
         <Button
-          onClick={() => router.push("/Payment/beginner")}
+          onClick={() => router.push("/course")}
           children="Create account"
           className=" bg-linear-to-r from-blue-500 to-blue-300 rounded-xl mt-6 w-full text-white"
         />
