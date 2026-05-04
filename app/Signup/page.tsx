@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Button from "../components/Button";
 import Textfield from "../components/Textfield";
 import Link from "next/link";
@@ -6,6 +7,55 @@ import { useRouter } from "next/navigation";
 
 export default function Signup() {
   const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const isFormValid = name.trim() && email.trim() && password.trim();
+
+  const isButtonDisabled = loading || !isFormValid;
+  const handleSignup = async () => {
+    try {
+      setLoading(true);
+
+      if (!name.trim() || !email.trim() || !password.trim()) {
+        setMessage("All fields are required");
+        return;
+      }
+
+      const data = {
+        name,
+        email,
+        password,
+      };
+
+      // fech
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      // read response
+      const result = await res.json();
+
+      // handle sucess
+      if (result.success) {
+        setMessage(result.message);
+        router.push("/Login");
+      } else {
+        setMessage(result.error);
+      }
+    } catch (error) {
+      setMessage("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <section className=" bg-linear-to-b from-blue-200 to-blue-50">
       <div className=" py-10 px-10 md:px-72 flex flex-col items-center">
@@ -14,15 +64,31 @@ export default function Signup() {
           Start learning video editing today
         </p>
 
+        {message && (
+          <p
+            className={`mt-4 text-center text-sm ${
+              message.toLowerCase().includes("success")
+                ? "text-green-600"
+                : "text-red-500"
+            }`}
+          >
+            {message}
+          </p>
+        )}
+
         <Textfield
           className=" w-full mt-7"
           label="Full Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           placeholder="Enter your full name"
         />
 
         <Textfield
           className=" w-full mt-3"
           type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           label="Email"
           placeholder="Example@email.com"
         />
@@ -30,15 +96,22 @@ export default function Signup() {
         <Textfield
           className=" w-full mt-3"
           type="text"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           label="Password"
           placeholder="At least 6 characters"
         />
 
         {/* button */}
         <Button
-          onClick={() => router.push("/course")}
-          children="Create account"
-          className=" bg-linear-to-r from-blue-500 to-blue-300 rounded-xl mt-6 w-full text-white"
+          onClick={handleSignup}
+          disabled={loading}
+          children={loading ? "Creating account..." : "Create account"}
+          className={
+            isButtonDisabled
+              ? "opacity-70 cursor-not-allowed rounded-xl mt-6 w-full text-white bg-blue-200"
+              : "bg-linear-to-r from-blue-500 to-blue-300 rounded-xl mt-6 w-full text-white"
+          }
         />
 
         <div className=" flex text-lg">
