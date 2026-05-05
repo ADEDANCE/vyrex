@@ -3,7 +3,7 @@ type CourseCardProps = {
   title: string;
   subtitle: string;
   buttonText?: string;
-  className: string;
+  className?: string;
   onClick?: () => void;
 };
 
@@ -24,7 +24,10 @@ export default function CourseCard({
 
         <p className="text-xs text-gray-600">{subtitle}</p>
 
-        <button className={` px-3 py-1 rounded-lg ${className}`}>
+        <button
+          onClick={onClick}
+          className={` px-3 py-1 rounded-lg ${className}`}
+        >
           {buttonText}
         </button>
       </div>
