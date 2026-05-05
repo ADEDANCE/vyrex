@@ -96,8 +96,6 @@ export default function Price() {
                   children="Start your journey"
                   className=" bg-linear-to-r from-blue-500 to-blue-300 rounded-xl mt-6 w-full text-white"
                 />
-
-                <PayButton />
               </div>
             </div>
           </div>
