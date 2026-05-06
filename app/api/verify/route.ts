@@ -1,4 +1,8 @@
 import { NextResponse } from "next/server";
+import User from "@/models/User";
+import { db } from "@/lib/db";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 
 export async function POST(req: Request) {
   try {
@@ -11,6 +15,31 @@ export async function POST(req: Request) {
       return NextResponse.json({
         success: false,
         message: "No reference provided",
+      });
+    }
+
+    //get token from cookie
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
+    // Validate token
+    if (!token) {
+      return NextResponse.json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    // decode token to get userId
+    let userId;
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+      userId = (decoded as any).id;
+    } catch {
+      return NextResponse.json({
+        success: false,
+        message: "Invalid token",
       });
     }
 
@@ -38,9 +67,16 @@ export async function POST(req: Request) {
 
     // Check if payment is successful
     if (data?.data?.status === "success") {
+      await db();
+
+      // update the user
+      await User.findByIdAndUpdate(userId, {
+        beginnerPaid: true,
+        currentLevel: "beginner",
+      });
       return NextResponse.json({
         success: true,
-        message: "Payment verified",
+        level: "beginner",
       });
     }
 
