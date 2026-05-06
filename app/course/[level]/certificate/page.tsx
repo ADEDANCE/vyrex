@@ -61,13 +61,12 @@ export default function page() {
               className="w-full md:w-xl border border-gray-300 rounded-xl mt-5"
             />
             {nextLevel ? (
-              <PayButton />
+              <Button
+                onClick={() => router.push(`/Payment/${nextLevel}`)}
+                children={`Proceed to ${titles[nextLevel as keyof typeof titles]} Phase`}
+                className="w-full md:w-xl bg-linear-to-r from-blue-500 to-blue-300 rounded-xl text-white font-bold"
+              />
             ) : (
-              // <Button
-              //   onClick={() => router.push(`/Payment/${nextLevel}`)}
-              //   children={`Proceed to ${titles[nextLevel as keyof typeof titles]} Phase`}
-              //   className="w-full md:w-xl bg-linear-to-r from-blue-500 to-blue-300 rounded-xl text-white font-bold"
-              // />
               <Button
                 // onClick={() => router.push("/dashboard")}
                 children="You've completed all phases "
