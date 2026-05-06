@@ -27,6 +27,13 @@ export function proxy(request) {
     }
   }
 
+  // fetch user
+  // const user = await User.findById(userId);
+  // check payment
+  //  if (!user.beginnerPaid) {
+  //   return NextResponse.redirect(new URL("/course", request.url));
+  // }
+
   return NextResponse.next();
 }
 
