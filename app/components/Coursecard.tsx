@@ -2,18 +2,14 @@ type CourseCardProps = {
   image: string;
   title: string;
   subtitle: string;
-  buttonText?: string;
-  className?: string;
-  onClick?: () => void;
+  action?: React.ReactNode;
 };
 
 export default function CourseCard({
   image,
   title,
   subtitle,
-  className,
-  buttonText = "Buy Now",
-  onClick,
+  action,
 }: CourseCardProps) {
   return (
     <div className="w-full">
@@ -24,12 +20,7 @@ export default function CourseCard({
 
         <p className="text-xs text-gray-600">{subtitle}</p>
 
-        <button
-          onClick={onClick}
-          className={` px-3 py-1 rounded-lg ${className}`}
-        >
-          {buttonText}
-        </button>
+        {action}
       </div>
     </div>
   );
