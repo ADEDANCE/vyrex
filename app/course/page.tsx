@@ -1,6 +1,35 @@
+"use client";
 import CourseCard from "../components/Coursecard";
+import { useRouter } from "next/navigation";
+import PayButton from "../components/PayButton";
+import { useState, useEffect } from "react";
 
-export default function page() {
+export default function Page() {
+  type User = {
+    email: string;
+    beginnerPaid?: boolean;
+    currentLevel?: string;
+  };
+
+  const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
+  // fetch user
+  useEffect(() => {
+    const getUser = async () => {
+      const res = await fetch("/api/me", { credentials: "include" });
+      const data = await res.json();
+
+      console.log("ME API RESPONSE:", data);
+
+      setUser(data.user);
+    };
+
+    getUser();
+  }, []);
+
+  if (!user) {
+    return <div className="p-5">Loading...</div>;
+  }
   return (
     <section className=" bg-linear-to-b from-blue-200 to-blue-50 w-full py-10 px-4 ">
       <div className=" flex flex-col items-start ">
@@ -23,24 +52,19 @@ export default function page() {
             image="/Beginner.jpg"
             title="Editing Foundations"
             subtitle="Master cuts, pacing & storytelling"
-            buttonText="Enroll Now"
-            className=" bg-blue-500 text-white"
+            action={user && <PayButton user={user} />}
           />
 
           <CourseCard
             image="/Intermediate.jpg"
             title="Intermediate"
             subtitle="Master cuts, pacing & storytelling"
-            buttonText="Unlock After Beginner"
-            className=" border border-gray-300"
           />
 
           <CourseCard
             image="/Expert.jpg"
             title="Advanced Editing"
             subtitle="Cinematic storytelling & transitions"
-            buttonText="Unlock After Intermediate"
-            className=" border border-gray-300"
           />
         </div>
       </div>
