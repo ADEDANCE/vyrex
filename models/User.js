@@ -16,6 +16,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  beginnerPaid: {
+    type: Boolean,
+    default: false,
+  },
+  currentLevel: {
+    type: String,
+    default: "none",
+  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
