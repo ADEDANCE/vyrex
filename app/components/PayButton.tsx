@@ -1,7 +1,7 @@
 "use client";
 import Button from "./Button";
 
-export default function PayButton() {
+export default function PayButton({ user }: { user: any }) {
   const verifyPayment = async (reference: string) => {
     try {
       //  call verify api
@@ -15,11 +15,12 @@ export default function PayButton() {
 
       // Read API response
       const data = await res.json();
-
+      email: user.email;
+      console.log("EMAIL SENT TO PAYSTACK:", user.email);
       // handle result
       if (data.success) {
         // redirect user
-        window.location.href = "/course/beginner";
+        window.location.href = `/course/${data.level}`;
       } else {
         alert("Payment verification failed");
       }
@@ -41,7 +42,7 @@ export default function PayButton() {
       key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
 
       // Add REQUIRED fields
-      email: "test@email.com",
+      email: user.email,
       amount: 3000 * 100, // Paystack uses kobo, not naira.
       ref: "" + Math.floor(Math.random() * 1000000000),
 
