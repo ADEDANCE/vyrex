@@ -3,12 +3,29 @@ import CourseCard from "../components/Coursecard";
 import { useRouter } from "next/navigation";
 import PayButton from "../components/PayButton";
 import { useState, useEffect } from "react";
+import Button from "../components/Button";
 
 export default function Page() {
   type User = {
     email: string;
-    beginnerPaid?: boolean;
     currentLevel?: string;
+
+    progress: {
+      beginner: {
+        paid: boolean;
+
+        completed: boolean;
+      };
+
+      intermediate: {
+        paid: boolean;
+        completed: boolean;
+      };
+
+      expert: {
+        paid: boolean;
+      };
+    };
   };
 
   const router = useRouter();
@@ -53,9 +70,16 @@ export default function Page() {
             title="Editing Foundations"
             subtitle="Master cuts, pacing & storytelling"
             action={
-              user && (
+              user &&
+              (user.progress.beginner.paid ? (
+                <Button
+                  onClick={() => router.push("/course/beginner")}
+                  children="Continue Learning"
+                  className="w-full bg-green-500 text-white rounded-xl"
+                />
+              ) : (
                 <PayButton level="beginner" amount={3000} email={user.email} />
-              )
+              ))
             }
           />
 
@@ -64,13 +88,26 @@ export default function Page() {
             title="Intermediate"
             subtitle="Master cuts, pacing & storytelling"
             action={
-              user && (
+              user &&
+              (!user.progress.beginner.completed ? (
+                <Button
+                  children="Unlock after Beginner"
+                  disabled
+                  className="w-full bg-gray-300 text-gray-600 rounded-xl cursor-not-allowed"
+                />
+              ) : user.progress.intermediate.paid ? (
+                <Button
+                  onClick={() => router.push("/course/intermediate")}
+                  children="Continue Learning"
+                  className="w-full bg-green-500 text-white rounded-xl"
+                />
+              ) : (
                 <PayButton
                   level="intermediate"
                   amount={3000}
                   email={user.email}
                 />
-              )
+              ))
             }
           />
 
@@ -79,9 +116,26 @@ export default function Page() {
             title="Advanced Editing"
             subtitle="Cinematic storytelling & transitions"
             action={
-              user && (
-                <PayButton level="expert" amount={4000} email={user.email} />
-              )
+              user &&
+              (!user.progress.intermediate.completed ? (
+                <Button
+                  children="Unlock after Intermediate"
+                  disabled
+                  className="w-full bg-gray-300 text-gray-600 rounded-xl cursor-not-allowed"
+                />
+              ) : user.progress.expert.paid ? (
+                <Button
+                  onClick={() => router.push("/course/expert")}
+                  children="Continue Learning"
+                  className="w-full bg-green-500 text-white rounded-xl"
+                />
+              ) : (
+                <PayButton
+                  level="intermediate"
+                  amount={4000}
+                  email={user.email}
+                />
+              ))
             }
           />
         </div>
