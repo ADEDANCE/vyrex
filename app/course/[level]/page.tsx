@@ -38,9 +38,6 @@ export default function page() {
     }
   }, [courseModules]);
 
-  // mark completed state
-  // const [courseModules, setCourseModules] = useState<Module[]>(modules);
-
   // Get level safely
   const params = useParams();
 
@@ -85,6 +82,29 @@ export default function page() {
 
     if (level) fetchProgress();
   }, [level]);
+
+  // update level copleted
+  const claimCertificate = async () => {
+    const res = await fetch("/api/complete-level", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ level }),
+    });
+
+    // Get response
+    const data = await res.json();
+
+    // Validate
+
+    if (!res.ok) {
+      alert(data.message);
+      return;
+    }
+
+    router.push(`/course/${level}/certificate`);
+  };
 
   // mark completed logic
   const markAsCompleted = async () => {
@@ -193,7 +213,7 @@ export default function page() {
 
           {isCourseCompleted && (
             <Button
-              onClick={() => router.push(`/course/${level}/certificate`)}
+              onClick={claimCertificate}
               children="Claim Certificate"
               className=" bg-linear-to-r from-blue-500 to-blue-300 rounded-xl text-white font-medium"
             />
