@@ -52,19 +52,37 @@ export default function Page() {
             image="/Beginner.jpg"
             title="Editing Foundations"
             subtitle="Master cuts, pacing & storytelling"
-            action={user && <PayButton user={user} />}
+            action={
+              user && (
+                <PayButton level="beginner" amount={3000} email={user.email} />
+              )
+            }
           />
 
           <CourseCard
             image="/Intermediate.jpg"
             title="Intermediate"
             subtitle="Master cuts, pacing & storytelling"
+            action={
+              user && (
+                <PayButton
+                  level="intermediate"
+                  amount={3000}
+                  email={user.email}
+                />
+              )
+            }
           />
 
           <CourseCard
             image="/Expert.jpg"
             title="Advanced Editing"
             subtitle="Cinematic storytelling & transitions"
+            action={
+              user && (
+                <PayButton level="expert" amount={4000} email={user.email} />
+              )
+            }
           />
         </div>
       </div>
