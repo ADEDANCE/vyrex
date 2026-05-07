@@ -52,11 +52,11 @@ export async function POST(req: Request) {
     }
 
     // Check if ALL lessons are done
-    const totalLessons = 10; // or dynamic from courseData
+    // const totalLessons = 10; // or dynamic from courseData
 
-    if (lessonArray.length === totalLessons) {
-      user.progress[level].completed = true;
-    }
+    // if (lessonArray.length === totalLessons) {
+    //   user.progress[level].completed = true;
+    // }
 
     // Unlock next level automatically
     if (level === "beginner" && user.progress.beginner.completed) {
