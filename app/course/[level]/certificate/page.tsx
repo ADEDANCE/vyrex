@@ -4,28 +4,73 @@ import Button from "@/app/components/Button";
 import PayButton from "@/app/components/PayButton";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function page() {
+  type User = {
+    email: string;
+    beginnerPaid?: boolean;
+    currentLevel?: string;
+  };
+
+  type Level = "beginner" | "intermediate" | "expert";
+
   const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
+  // fetch user
+  useEffect(() => {
+    const getUser = async () => {
+      const res = await fetch("/api/me", { credentials: "include" });
+      const data = await res.json();
+
+      console.log("ME API RESPONSE:", data);
+
+      setUser(data.user);
+    };
+
+    getUser();
+  }, []);
+
   // get level url
   const params = useParams();
 
-  const level = Array.isArray(params.level) ? params.level[0] : params.level;
+  const paramsLevel = Array.isArray(params.level)
+    ? params.level[0]
+    : params.level;
+
+  // level order
+  const levelOrder: Level[] = ["beginner", "intermediate", "expert"];
+
+  const level: Level | null = levelOrder.includes(paramsLevel as Level)
+    ? (paramsLevel as Level)
+    : null;
 
   if (!level) return <p>Invalid level</p>;
+
+  if (!user) {
+    return <div className="p-5">Loading...</div>;
+  }
+
+  const prices = {
+    beginner: 3000,
+    intermediate: 3000,
+    expert: 4000,
+  };
 
   const titles = {
     beginner: "Beginner ",
     intermediate: "Intermediate ",
     expert: "Expert ",
   };
-  // level order
-  const levelOrder = ["beginner", "intermediate", "expert"];
+
   // find current level
   const currentIndex = levelOrder.indexOf(level);
 
   // get next level
-  const nextLevel = levelOrder[currentIndex + 1];
+  const nextLevel =
+    currentIndex !== -1 && currentIndex < levelOrder.length - 1
+      ? levelOrder[currentIndex + 1]
+      : null;
 
   // if user is on expert
   if (!nextLevel) {
@@ -49,7 +94,7 @@ export default function page() {
           </h2>
 
           <p>
-            You've unlocked the foundation. The Intermediate phase gives you
+            You've unlocked the foundation. The {nextLevel} phase gives you
             advanced techniques, project files, and 1:1 mentorship — the fastest
             path from competent to undeniable.
           </p>
@@ -61,10 +106,15 @@ export default function page() {
               className="w-full md:w-xl border border-gray-300 rounded-xl mt-5"
             />
             {nextLevel ? (
-              <Button
-                onClick={() => router.push(`/Payment/${nextLevel}`)}
-                children={`Proceed to ${titles[nextLevel as keyof typeof titles]} Phase`}
-                className="w-full md:w-xl bg-linear-to-r from-blue-500 to-blue-300 rounded-xl text-white font-bold"
+              // <Button
+              //   onClick={() => router.push(`/Payment/${nextLevel}`)}
+              //   children={`Proceed to ${titles[nextLevel as keyof typeof titles]} Phase`}
+              //   className="w-full md:w-xl bg-linear-to-r from-blue-500 to-blue-300 rounded-xl text-white font-bold"
+              // />
+              <PayButton
+                level={nextLevel}
+                amount={prices[nextLevel as keyof typeof prices]}
+                email={user.email}
               />
             ) : (
               <Button
