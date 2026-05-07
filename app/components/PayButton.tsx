@@ -1,8 +1,13 @@
 "use client";
-import Button from "./Button";
 
-export default function PayButton({ user }: { user: any }) {
-  const verifyPayment = async (reference: string) => {
+type PayButtonProps = {
+  level: "beginner" | "intermediate" | "expert";
+  amount: number;
+  email: string;
+};
+
+export default function PayButton({ level, amount, email }: PayButtonProps) {
+  const verifyPayment = async (reference: string, level: string) => {
     try {
       //  call verify api
       const res = await fetch("/api/verify", {
@@ -10,13 +15,15 @@ export default function PayButton({ user }: { user: any }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ reference }),
+        body: JSON.stringify({
+          reference,
+          level,
+        }),
       });
 
       // Read API response
       const data = await res.json();
-      email: user.email;
-      console.log("EMAIL SENT TO PAYSTACK:", user.email);
+
       // handle result
       if (data.success) {
         // redirect user
@@ -42,8 +49,8 @@ export default function PayButton({ user }: { user: any }) {
       key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
 
       // Add REQUIRED fields
-      email: user.email,
-      amount: 3000 * 100, // Paystack uses kobo, not naira.
+      email,
+      amount: amount * 100, // Paystack uses kobo, not naira.
       ref: "" + Math.floor(Math.random() * 1000000000),
 
       // Handle success
@@ -51,7 +58,7 @@ export default function PayButton({ user }: { user: any }) {
         console.log("Success:", response);
 
         //  trigger next step
-        verifyPayment(response.reference);
+        verifyPayment(response.reference, level);
       },
 
       // Handle cancel
