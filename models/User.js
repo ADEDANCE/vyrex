@@ -16,12 +16,26 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  beginnerPaid: {
-    type: Boolean,
-    default: false,
+  progress: {
+    beginner: {
+      paid: { type: Boolean, default: false },
+      completedLessons: [Number],
+      completed: { type: Boolean, default: false },
+    },
+    intermediate: {
+      paid: { type: Boolean, default: false },
+      completedLessons: [Number],
+      completed: { type: Boolean, default: false },
+    },
+    expert: {
+      paid: { type: Boolean, default: false },
+      completedLessons: [Number],
+      completed: { type: Boolean, default: false },
+    },
   },
   currentLevel: {
     type: String,
+    enum: ["none", "beginner", "intermediate", "expert"],
     default: "none",
   },
 });
