@@ -23,49 +23,99 @@ type Module = {
   title: string;
   lessons: Lesson[];
 };
+
+type Level = "beginner" | "intermediate" | "expert";
 export default function page() {
   const router = useRouter();
+  const [courseModules, setCourseModules] = useState<Module[]>([]);
+  const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
+  const [loading, setLoading] = useState(true);
+  //
 
-  // get url params
-  const params = useParams();
-
-  // if level is an array, take the first value
-  const level = Array.isArray(params.level) ? params.level[0] : params.level;
-
-  if (!level) return <p>Invalid level</p>;
-
-  // Use level to pick correct course
-  const modules = courseData[level as "beginner" | "intermediate" | "expert"];
-
-  const [currentLesson, setCurrentLesson] = useState<Lesson>(
-    modules[0].lessons[0],
-  );
+  useEffect(() => {
+    if (courseModules.length > 0 && !currentLesson) {
+      setCurrentLesson(courseModules[0].lessons[0]);
+    }
+  }, [courseModules]);
 
   // mark completed state
-  const [courseModules, setCourseModules] = useState<Module[]>(modules);
+  // const [courseModules, setCourseModules] = useState<Module[]>(modules);
+
+  // Get level safely
+  const params = useParams();
+
+  const rawLevel = Array.isArray(params.level) ? params.level[0] : params.level;
+
+  const level: Level | null =
+    rawLevel === "beginner" ||
+    rawLevel === "intermediate" ||
+    rawLevel === "expert"
+      ? rawLevel
+      : null;
+
+  if (!level) return null;
+
+  // Use level to pick correct course
+  const modules = courseData[level];
+
+  // Fetch progress on page load
+  useEffect(() => {
+    const fetchProgress = async () => {
+      const res = await fetch("/api/me", { credentials: "include" });
+      const data = await res.json();
+
+      const completedLessons =
+        data?.user?.progress?.[level]?.completedLessons || [];
+
+      const updatedModules = courseData[level].map((module) => ({
+        ...module,
+        lessons: module.lessons.map((lesson) => ({
+          ...lesson,
+          completed: completedLessons.includes(lesson.id),
+        })),
+      }));
+
+      setCourseModules(updatedModules);
+
+      // set first lesson AFTER data loads
+      setCurrentLesson(updatedModules[0].lessons[0]);
+
+      setLoading(false);
+    };
+
+    if (level) fetchProgress();
+  }, [level]);
 
   // mark completed logic
-  const markAsCompleted = () => {
-    const updated = courseModules.map((module) => ({
-      ...module,
-      lessons: module.lessons.map((lesson) =>
-        lesson.id === currentLesson.id
-          ? { ...lesson, completed: true }
-          : lesson,
-      ),
-    }));
+  const markAsCompleted = async () => {
+    const res = await fetch("/api/lesson-complete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        level,
+        lessonId: currentLesson?.id,
+      }),
+    });
 
-    setCourseModules(updated);
+    const data = await res.json();
 
-    // update currentLesson reference
-    const newLesson = updated
-      .flatMap((m) => m.lessons)
-      .find((l) => l.id === currentLesson.id);
-
-    if (newLesson) {
-      setCurrentLesson(newLesson);
+    if (!res.ok) {
+      alert("Failed");
+      return;
     }
-    // saveProgress(updated, currentLesson);
+
+    const completedLessons = data.progress[level].completedLessons;
+
+    // update UI immediately
+    setCourseModules((prev) =>
+      prev.map((module) => ({
+        ...module,
+        lessons: module.lessons.map((lesson) => ({
+          ...lesson,
+          completed: completedLessons.includes(lesson.id),
+        })),
+      })),
+    );
   };
   // next tutorial
   const goToNextLesson = () => {
@@ -73,7 +123,7 @@ export default function page() {
       const module = courseModules[i];
 
       const lessonIndex = module.lessons.findIndex(
-        (l) => l.id === currentLesson.id,
+        (l) => l.id === currentLesson?.id,
       );
 
       if (lessonIndex !== -1) {
@@ -104,50 +154,6 @@ export default function page() {
     }
   };
 
-  // // save progress
-  // const saveProgress = (modules: Module[], currentLesson: Lesson) => {
-  //   const completedLessons = modules
-  //     .flatMap((m) => m.lessons)
-  //     .filter((l) => l.completed)
-  //     .map((l) => l.id);
-
-  //   const data = {
-  //     currentLessonId: currentLesson.id,
-  //     completedLessons,
-  //   };
-
-  //   localStorage.setItem("vyrex-progress", JSON.stringify(data));
-  // };
-
-  // // Restore progress
-  // useEffect(() => {
-  //   const saved = localStorage.getItem("vyrex-progress");
-
-  //   if (!saved) return;
-
-  //   const parsed = JSON.parse(saved);
-
-  //   // restore completed lessons
-  //   const updatedModules = modules.map((module) => ({
-  //     ...module,
-  //     lessons: module.lessons.map((lesson) => ({
-  //       ...lesson,
-  //       completed: parsed.completedLessons.includes(lesson.id),
-  //     })),
-  //   }));
-
-  //   setCourseModules(updatedModules);
-
-  //   // restore current lesson
-  //   const lesson = updatedModules
-  //     .flatMap((m) => m.lessons)
-  //     .find((l) => l.id === parsed.currentLessonId);
-
-  //   if (lesson) {
-  //     setCurrentLesson(lesson);
-  //   }
-  // }, []);
-
   // check if course completed
   const isCourseCompleted = courseModules
     .flatMap((m) => m.lessons)
@@ -168,10 +174,6 @@ export default function page() {
           onContextMenu={(e) => e.preventDefault()}
           disablePictureInPicture
         />
-        {/* <div className="absolute top-78 left-25 text-white text-9xl opacity-60">
-            VYREX
-          </div>
-        </div> */}
 
         <div className=" flex flex-wrap gap-6 mt-7">
           <Button
