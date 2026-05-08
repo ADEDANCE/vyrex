@@ -53,7 +53,7 @@ export default function page() {
   if (!level) return null;
 
   // Use level to pick correct course
-  const modules = courseData[level];
+  // const modules = courseData[level];
 
   // Fetch progress on page load
   useEffect(() => {
@@ -61,6 +61,13 @@ export default function page() {
       const res = await fetch("/api/me", { credentials: "include" });
       const data = await res.json();
 
+      // Check access
+      if (!data.user.access[level]) {
+        router.push("/course");
+        return;
+      }
+
+      // Extract Completed Lessons
       const completedLessons =
         data?.user?.progress?.[level]?.completedLessons || [];
 
@@ -72,6 +79,7 @@ export default function page() {
         })),
       }));
 
+      // Save Updated Modules
       setCourseModules(updatedModules);
 
       // set first lesson AFTER data loads

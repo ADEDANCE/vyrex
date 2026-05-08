@@ -38,6 +38,7 @@ export default function Page() {
 
       console.log("ME API RESPONSE:", data);
 
+      // Save User to State
       setUser(data.user);
     };
 
