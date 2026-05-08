@@ -17,19 +17,6 @@ export default function page() {
 
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
-  // fetch user
-  useEffect(() => {
-    const getUser = async () => {
-      const res = await fetch("/api/me", { credentials: "include" });
-      const data = await res.json();
-
-      console.log("ME API RESPONSE:", data);
-
-      setUser(data.user);
-    };
-
-    getUser();
-  }, []);
 
   // get level url
   const params = useParams();
@@ -46,6 +33,26 @@ export default function page() {
     : null;
 
   if (!level) return <p>Invalid level</p>;
+  // find current level
+  const currentIndex = levelOrder.indexOf(level);
+  // fetch user
+  useEffect(() => {
+    const getUser = async () => {
+      const res = await fetch("/api/me", { credentials: "include" });
+      const data = await res.json();
+
+      if (!data.user.access[level]) {
+        router.push("/course");
+        return;
+      }
+
+      console.log("ME API RESPONSE:", data);
+
+      setUser(data.user);
+    };
+
+    getUser();
+  }, []);
 
   if (!user) {
     return <div className="p-5">Loading...</div>;
@@ -62,9 +69,6 @@ export default function page() {
     intermediate: "Intermediate ",
     expert: "Expert ",
   };
-
-  // find current level
-  const currentIndex = levelOrder.indexOf(level);
 
   // get next level
   const nextLevel =
