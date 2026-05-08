@@ -38,6 +38,22 @@ const userSchema = new mongoose.Schema({
     enum: ["none", "beginner", "intermediate", "expert"],
     default: "none",
   },
+  access: {
+    beginner: {
+      type: Boolean,
+      default: false,
+    },
+
+    intermediate: {
+      type: Boolean,
+      default: false,
+    },
+
+    expert: {
+      type: Boolean,
+      default: false,
+    },
+  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
