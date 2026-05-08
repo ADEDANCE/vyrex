@@ -134,6 +134,9 @@ export async function POST(req: Request) {
         user.currentLevel = "expert";
       }
 
+      // grant access after payment
+      user.access[level] = true;
+
       // save user
       await user.save();
 
