@@ -5,6 +5,7 @@ import PayButton from "@/app/components/PayButton";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function page() {
   type User = {
@@ -102,6 +103,16 @@ export default function page() {
             advanced techniques, project files, and 1:1 mentorship — the fastest
             path from competent to undeniable.
           </p>
+
+          <div>
+            <Image
+              src="/images/certificate.png"
+              alt=""
+              width={300}
+              height={300}
+              className=" w-full"
+            />
+          </div>
 
           <div className=" flex flex-col gap-7 items-center ">
             {" "}
