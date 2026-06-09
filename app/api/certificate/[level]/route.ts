@@ -6,13 +6,12 @@ type Level = "beginner" | "intermediate" | "expert";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { level: string } },
+  context: { params: Promise<{ level: string }> },
 ) {
+  // Extract level from URL.
+  const { level } = await context.params;
   try {
     await db();
-
-    // Extract level from URL.
-    const { level } = params;
 
     const userId = req.headers.get("x-user-id");
 
@@ -42,6 +41,9 @@ export async function GET(
       courseLevel: level,
       completionDate: new Date().toDateString(),
     };
+
+    console.log("LEVEL:", level);
+    console.log(certificateData);
     return NextResponse.json(certificateData);
   } catch (error) {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
