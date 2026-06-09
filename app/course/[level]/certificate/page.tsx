@@ -4,21 +4,32 @@ import Button from "@/app/components/Button";
 import PayButton from "@/app/components/PayButton";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import User from "@/models/User";
+import html2canvas from "html2canvas";
 
 export default function page() {
+  type CertificateData = {
+    studentName: string;
+    courseLevel: string;
+    completionDate: string;
+  };
+
+  const [certificate, setCertificate] = useState<CertificateData | null>(null);
   type User = {
     email: string;
+    name?: string;
     beginnerPaid?: boolean;
     currentLevel?: string;
+    completionDate?: string;
   };
 
   type Level = "beginner" | "intermediate" | "expert";
 
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
-
+  const certificateRef = useRef<HTMLDivElement>(null);
   // get level url
   const params = useParams();
 
@@ -36,6 +47,27 @@ export default function page() {
   if (!level) return <p>Invalid level</p>;
   // find current level
   const currentIndex = levelOrder.indexOf(level);
+
+  //  download function
+  const downloadCertificate = async () => {
+    if (!certificateRef.current) return;
+
+    const canvas = await html2canvas(certificateRef.current, {
+      scale: 2,
+      useCORS: true,
+    });
+
+    const image = canvas.toDataURL("image/png");
+
+    const link = document.createElement("a");
+
+    link.href = image;
+
+    link.download = `certificate-${level}.png`;
+
+    link.click();
+  };
+
   // fetch user
   useEffect(() => {
     const getUser = async () => {
@@ -47,7 +79,19 @@ export default function page() {
         return;
       }
 
-      console.log("ME API RESPONSE:", data);
+      const certificateRes = await fetch(`/api/certificate/${level}`, {
+        credentials: "include",
+        headers: {
+          "x-user-id": data.user._id,
+        },
+      });
+
+      const certificateData = await certificateRes.json();
+
+      // save
+      setCertificate(certificateData);
+
+      // console.log("ME API RESPONSE:", data);
 
       setUser(data.user);
     };
@@ -91,7 +135,7 @@ export default function page() {
           You just completed Editing Foundations. This is a real milestone —
           most people never finish what they start. You did
         </p>
-
+        <h3 className=" ">{user.name}</h3>
         <div className=""></div>
         <div className=" w-full md:w-2xl mt-10 bg-white border border-blue-200 shadow py-4 px-4 rounded-2xl">
           <h2 className=" font-medium text-black text-xl">
@@ -104,7 +148,7 @@ export default function page() {
             path from competent to undeniable.
           </p>
 
-          <div>
+          <div className=" relative" ref={certificateRef}>
             <Image
               src="/images/certificate.png"
               alt=""
@@ -112,11 +156,20 @@ export default function page() {
               height={300}
               className=" w-full"
             />
+            <h2 className=" text-2xl absolute top-47 left-40">
+              {certificate?.studentName}
+            </h2>
+
+            <p className=" absolute right-26  top-57 font-bold text-xs">
+              {certificate?.courseLevel} level
+            </p>
+            <p>ON {certificate?.completionDate}</p>
           </div>
 
           <div className=" flex flex-col gap-7 items-center ">
             {" "}
             <Button
+              onClick={downloadCertificate}
               children="Download certificate"
               className="w-full md:w-xl border border-gray-300 rounded-xl mt-5"
             />
