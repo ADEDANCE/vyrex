@@ -1,6 +1,7 @@
 import { db } from "../../../lib/db";
 import User from "../../../models/User";
 import bcrypt from "bcrypt";
+import { sendWelcomeEmail } from "@/lib/sendEmail";
 
 export async function POST(request) {
   try {
@@ -43,6 +44,8 @@ export async function POST(request) {
 
     savedUser = await user.save();
 
+    await sendWelcomeEmail(savedUser.email, savedUser.name);
+
     // remove password
     const userResponse = savedUser.toObject();
     delete userResponse.password;
@@ -52,6 +55,7 @@ export async function POST(request) {
       { status: 201 },
     );
   } catch (error) {
+    console.error("SIGNUP ERROR:", error);
     return Response.json(
       { success: false, error: "Something went wrong" },
       { status: 500 },
