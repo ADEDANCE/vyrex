@@ -5,7 +5,7 @@ export const beginnerModules = [
       {
         id: 1,
         title: "Welcome to VYREX",
-        videoUrl: "/welcome.mp4",
+        videoUrl: "/videos/welcome.mp4",
         duration: "4:12",
         completed: false,
         notes: "Welcoming message",
@@ -14,7 +14,7 @@ export const beginnerModules = [
       {
         id: 2,
         title: "Psychology of video editing",
-        videoUrl: "/welcome.mp4",
+        videoUrl: "/videos/PhyscologyVediting.mp4",
         duration: "4:12",
         completed: false,
         notes:
@@ -24,7 +24,7 @@ export const beginnerModules = [
       {
         id: 3,
         title: "Video editing principle",
-        videoUrl: "/welcome.mp4",
+        videoUrl: "/videos/welcome.mp4",
         duration: "9:12",
         completed: false,
         notes:
@@ -40,7 +40,7 @@ export const beginnerModules = [
       {
         id: 4,
         title: "Intro to capcut 1",
-        videoUrl: "/welcome.mp4",
+        videoUrl: "/videos/Introcapcut1.mp4",
         duration: "4:12",
         completed: false,
         notes: "Welcoming message",
@@ -49,7 +49,7 @@ export const beginnerModules = [
       {
         id: 5,
         title: "Intro to capcut 2",
-        videoUrl: "/welcome.mp4",
+        videoUrl: "/videos/Introcapcut2.mp4",
         duration: "12:12",
         completed: false,
         notes:
@@ -65,7 +65,7 @@ export const beginnerModules = [
       {
         id: 6,
         title: "Sourcing for resources 1",
-        videoUrl: "/welcome.mp4",
+        videoUrl: "/videos/Sourcingresources1.mp4",
         duration: "4:12",
         completed: false,
         notes: "Welcoming message",
@@ -74,7 +74,7 @@ export const beginnerModules = [
       {
         id: 7,
         title: "Sourcing for resources 2",
-        videoUrl: "/welcome.mp4",
+        videoUrl: "/videos/welcome.mp4",
         duration: "12:12",
         completed: false,
         notes:
@@ -90,7 +90,7 @@ export const beginnerModules = [
       {
         id: 8,
         title: "Video Scripting Formula",
-        videoUrl: "/welcome.mp4",
+        videoUrl: "/videos/Script-writing1.mp4",
         duration: "4:12",
         completed: false,
         notes: "Welcoming message",
@@ -99,7 +99,7 @@ export const beginnerModules = [
       {
         id: 9,
         title: "Video Scripting",
-        videoUrl: "/welcome.mp4",
+        videoUrl: "/videos/Script-writing2.mp4",
         duration: "4:12",
         completed: false,
         notes:
