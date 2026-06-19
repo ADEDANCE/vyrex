@@ -46,6 +46,7 @@ export default function Signup() {
       // handle sucess
       if (result.success) {
         setMessage(result.message);
+
         router.push("/Login");
       } else {
         setMessage(result.error);
