@@ -55,6 +55,10 @@ export default function page() {
     const canvas = await html2canvas(certificateRef.current, {
       scale: 2,
       useCORS: true,
+      scrollX: 0,
+      scrollY: 0,
+      width: certificateRef.current.scrollWidth,
+      height: certificateRef.current.scrollHeight,
     });
 
     const image = canvas.toDataURL("image/png");
@@ -148,19 +152,22 @@ export default function page() {
             path from competent to undeniable.
           </p>
 
-          <div className=" relative" ref={certificateRef}>
+          <div className="relative w-full" ref={certificateRef}>
             <Image
               src="/images/certificate.png"
               alt=""
-              width={300}
-              height={300}
-              className=" w-full"
+              width={3508}
+              height={2480}
+              className="w-full h-auto"
             />
             <h2 className=" text-2xl absolute top-47 left-40">
               {certificate?.studentName}
             </h2>
 
-            <p className=" absolute right-26  top-57 font-bold text-xs">
+            <p
+              className=" absolute right-26  top-57 font-bold text-xs"
+              style={{ color: "#93C5FD" }}
+            >
               {certificate?.courseLevel} level
             </p>
             <p>ON {certificate?.completionDate}</p>

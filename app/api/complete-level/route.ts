@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import User from "@/models/User";
 import { db } from "@/lib/db";
+import { sendCertificateEmail } from "@/lib/sendEmail";
 
 export async function POST(req: Request) {
   try {
@@ -11,6 +12,57 @@ export async function POST(req: Request) {
 
     // extract level
     const level = body.level;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     // Validate level
     if (!["beginner", "intermediate", "expert"].includes(level)) {
@@ -74,6 +126,10 @@ export async function POST(req: Request) {
 
     await user.save();
 
+
+        const courseLink = `${process.env.NEXT_PUBLIC_APP_URL}/course/${level}/certificate`;
+    
+          await sendCertificateEmail(user.email, user.name, level, courseLink);
     return NextResponse.json({
       success: true,
       level,

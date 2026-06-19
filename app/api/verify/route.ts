@@ -3,6 +3,7 @@ import User from "@/models/User";
 import { db } from "@/lib/db";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
+import { sendCourseAccessEmail } from "@/lib/sendEmail";
 
 export async function POST(req: Request) {
   try {
@@ -139,6 +140,10 @@ export async function POST(req: Request) {
 
       // save user
       await user.save();
+
+      await sendCourseAccessEmail(user.email, user.name, level);
+
+  
 
       return NextResponse.json({
         success: true,
