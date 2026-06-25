@@ -144,6 +144,13 @@ export default function page() {
         })),
       })),
     );
+
+    if (currentLesson) {
+      setCurrentLesson({
+        ...currentLesson,
+        completed: true,
+      });
+    }
   };
   // next tutorial
   const goToNextLesson = () => {

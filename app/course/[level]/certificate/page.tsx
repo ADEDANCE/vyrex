@@ -77,9 +77,15 @@ export default function page() {
     const getUser = async () => {
       const res = await fetch("/api/me", { credentials: "include" });
       const data = await res.json();
-
       if (!data.user.access[level]) {
         router.push("/course");
+        return;
+      }
+// check if user complete the level
+      const hasCompletedLevel = data.user.progress[level].completed;
+
+      if (!hasCompletedLevel) {
+        router.push(`/course/${level}`);
         return;
       }
 
