@@ -4,73 +4,25 @@ import jwt from "jsonwebtoken";
 import User from "@/models/User";
 import { db } from "@/lib/db";
 import { sendCertificateEmail } from "@/lib/sendEmail";
+import { courseData } from "@/data";
 
+type Level = "beginner" | "intermediate" | "expert";
 export async function POST(req: Request) {
   try {
     // read request body
     const body = await req.json();
 
     // extract level
-    const level = body.level;
+    const level = body.level as Level;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    // Validate level
+    // // Validate level
     if (!["beginner", "intermediate", "expert"].includes(level)) {
       return NextResponse.json({
         success: false,
         message: "Invalid level",
       });
     }
+
     // Get token from cookies
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
@@ -110,26 +62,43 @@ export async function POST(req: Request) {
         message: "User not found",
       });
     }
+// ALL lessons in the level 
+    const totalLessons = courseData[level].flatMap(
+      (module) => module.lessons,
+    ).length;
+
+    const completedCount = user.progress[level].completedLessons.length;
+
+    if (completedCount < totalLessons) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Complete all lessons first",
+        },
+        { status: 400 },
+      );
+    }
+
+    user.progress[level].completed = true;
 
     // mark level completed
-    if (level === "beginner") {
-      user.progress.beginner.completed = true;
-    }
+    // if (level === "beginner") {
+    //   user.progress.beginner.completed = true;
+    // }
 
-    if (level === "intermediate") {
-      user.progress.intermediate.completed = true;
-    }
+    // if (level === "intermediate") {
+    //   user.progress.intermediate.completed = true;
+    // }
 
-    if (level === "expert") {
-      user.progress.expert.completed = true;
-    }
+    // if (level === "expert") {
+    //   user.progress.expert.completed = true;
+    // }
 
     await user.save();
 
+    const courseLink = `${process.env.NEXT_PUBLIC_APP_URL}/course/${level}/certificate`;
 
-        const courseLink = `${process.env.NEXT_PUBLIC_APP_URL}/course/${level}/certificate`;
-    
-          await sendCertificateEmail(user.email, user.name, level, courseLink);
+    await sendCertificateEmail(user.email, user.name, level, courseLink);
     return NextResponse.json({
       success: true,
       level,
