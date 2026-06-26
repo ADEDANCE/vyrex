@@ -30,6 +30,8 @@ export default function page() {
   const [courseModules, setCourseModules] = useState<Module[]>([]);
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [certificateClaimed, setCertificateClaimed] = useState(false);
   //
 
   useEffect(() => {
@@ -60,6 +62,11 @@ export default function page() {
     const fetchProgress = async () => {
       const res = await fetch("/api/me", { credentials: "include" });
       const data = await res.json();
+
+      // check if certifcate has been claimed
+      setCertificateClaimed(
+        data?.user?.certificates?.[level]?.claimed || false,
+      );
 
       // Check access
       if (!data.user.access[level]) {
@@ -111,6 +118,11 @@ export default function page() {
       return;
     }
 
+    router.push(`/course/${level}/certificate`);
+  };
+
+  // View certificaete
+  const viewCertificate = () => {
     router.push(`/course/${level}/certificate`);
   };
 
@@ -228,8 +240,10 @@ export default function page() {
 
           {isCourseCompleted && (
             <Button
-              onClick={claimCertificate}
-              children="Claim Certificate"
+              onClick={certificateClaimed ? viewCertificate : claimCertificate}
+              children={
+                certificateClaimed ? "View Certificate" : "Claim Certificate"
+              }
               className=" bg-linear-to-r from-blue-500 to-blue-300 rounded-xl text-white font-medium"
             />
           )}
