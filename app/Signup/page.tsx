@@ -4,12 +4,14 @@ import Button from "../components/Button";
 import Textfield from "../components/Textfield";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Signup() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -94,14 +96,23 @@ export default function Signup() {
           placeholder="Example@email.com"
         />
 
-        <Textfield
-          className=" w-full mt-3"
-          type="text"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          label="Password"
-          placeholder="At least 6 characters"
-        />
+        <div className="relative w-full">
+          <Textfield
+            className=" w-full mt-3"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            label="Password"
+            placeholder="At least 6 characters"
+          />
+
+          <div
+            className="absolute right-3 bottom-1 -translate-y-1/2 cursor-pointer"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </div>
+        </div>
 
         {/* button */}
         <Button
