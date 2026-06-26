@@ -10,6 +10,7 @@ export async function GET(
 ) {
   // Extract level from URL.
   const { level } = await context.params;
+  const courseLevel = level as Level;
   try {
     await db();
 
@@ -27,19 +28,27 @@ export async function GET(
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // const progress = user.progress[level];
+    const progress = user.progress[courseLevel];
 
-    // if (!progress?.completed) {
-    //   return NextResponse.json(
-    //     { error: "Course not completed yet" },
-    //     { status: 403 },
-    //   );
-    // }
+    if (!progress?.completed) {
+      return NextResponse.json(
+        { error: "Course not completed yet" },
+        { status: 403 },
+      );
+    }
 
+    // Get Certificate Information
+    const certificate = user.certificates[courseLevel];
+    if (!certificate.claimed) {
+      certificate.claimed = true;
+      certificate.claimedAt = new Date();
+
+      await user.save();
+    }
     const certificateData = {
       studentName: user.name,
       courseLevel: level,
-      completionDate: new Date().toDateString(),
+      completionDate: certificate.claimedAt?.toDateString(),
     };
 
     console.log("LEVEL:", level);
