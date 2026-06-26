@@ -1,6 +1,7 @@
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import About from "./sections/About";
+import Faq from "./sections/Faq";
 import Hero from "./sections/Hero";
 import Price from "./sections/Price";
 import Testimony from "./sections/Testimony";
@@ -11,8 +12,8 @@ export default function Home() {
       <Hero />
       <Price />
       <About />
-      <Testimony/>
-      
+      <Testimony />
+      <Faq />
     </div>
   );
 }
