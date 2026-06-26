@@ -20,7 +20,12 @@ export default function page() {
   type User = {
     email: string;
     name?: string;
-    beginnerPaid?: boolean;
+    // beginnerPaid?: boolean;
+    access?: {
+      beginner: boolean;
+      intermediate: boolean;
+      expert: boolean;
+    };
     currentLevel?: string;
     completionDate?: string;
   };
@@ -81,7 +86,7 @@ export default function page() {
         router.push("/course");
         return;
       }
-// check if user complete the level
+      // check if user complete the level
       const hasCompletedLevel = data.user.progress[level].completed;
 
       if (!hasCompletedLevel) {
@@ -135,6 +140,8 @@ export default function page() {
   if (!nextLevel) {
     // no next level
   }
+
+  const hasAccessToNextLevel = nextLevel && user.access?.[nextLevel];
   return (
     <section className=" bg-blue-50 w-full py-10 px-4 ">
       <div className=" flex flex-col items-center ">
@@ -187,16 +194,19 @@ export default function page() {
               className="w-full md:w-xl border border-gray-300 rounded-xl mt-5"
             />
             {nextLevel ? (
-              // <Button
-              //   onClick={() => router.push(`/Payment/${nextLevel}`)}
-              //   children={`Proceed to ${titles[nextLevel as keyof typeof titles]} Phase`}
-              //   className="w-full md:w-xl bg-linear-to-r from-blue-500 to-blue-300 rounded-xl text-white font-bold"
-              // />
-              <PayButton
-                level={nextLevel}
-                amount={prices[nextLevel as keyof typeof prices]}
-                email={user.email}
-              />
+              hasAccessToNextLevel ? (
+                <Button
+                  onClick={() => router.push(`/course/${nextLevel}`)}
+                  children={`Proceed to ${titles[nextLevel]} Phase`}
+                  className="w-full md:w-xl bg-linear-to-r from-blue-500 to-blue-300 rounded-xl text-white font-bold"
+                />
+              ) : (
+                <PayButton
+                  level={nextLevel}
+                  amount={prices[nextLevel as keyof typeof prices]}
+                  email={user.email}
+                />
+              )
             ) : (
               <Button
                 // onClick={() => router.push("/dashboard")}
