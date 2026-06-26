@@ -132,7 +132,7 @@ export default function Page() {
                 />
               ) : (
                 <PayButton
-                  level="intermediate"
+                  level="expert"
                   amount={4000}
                   email={user.email}
                 />
