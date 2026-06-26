@@ -13,20 +13,20 @@ export default function Navbar() {
       <div className=" flex justify-between items-center">
         <div className=" hidden lg:flex gap-4 text-gray-600 items-center">
           <Link
-            href={""}
+            href="/#features"
             className=" hover:bg-blue-200 hover:rounded-xl py-2 px-4"
           >
             Features
           </Link>
           <Link
-            href={""}
+            href="/#pricing"
             className=" hover:bg-blue-200 hover:rounded-xl py-2 px-4"
           >
             Pricing
           </Link>
           <Link
-            href={""}
-            className=" hover:bg-blue-200 hover:rounded-xl py-2 px-4"
+            href="/#testimony"
+            className=" hover:bg-blue-200 hover:rounded-xl py-2 px-4 "
           >
             Testimony
           </Link>

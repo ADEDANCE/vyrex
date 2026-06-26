@@ -1,6 +1,9 @@
+"use client";
+import { useRouter } from "next/navigation";
 import Button from "../components/Button";
 
 export default function Hero() {
+  const router = useRouter();
   return (
     <section className=" w-full py-10 px-6 bg-linear-to-b from-blue-500 to-blue-50">
       <div className=" flex flex-col justify-center items-center ">
@@ -19,6 +22,7 @@ export default function Hero() {
           craft
         </p>
         <Button
+          onClick={() => router.push("/Signup")}
           children="Start learning"
           className=" mt-7 bg-blue-500 text-white rounded-2xl"
         />

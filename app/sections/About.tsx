@@ -1,16 +1,10 @@
 import { FaUser } from "react-icons/fa";
 import Aboutcard from "../components/Aboutcard";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+
 
 export default function About() {
   return (
-    <section className=" w-full py-10 px-6 bg-blue-50">
+    <section id="features" className=" w-full py-10 px-6 bg-blue-50">
       <div className=" text-center text-black">
         <p className=" text-blue-500">Why VIREX</p>
         <h2 className=" text-2xl">A complete creative learning system</h2>
@@ -57,65 +51,6 @@ export default function About() {
             subtitle="Showcase shareable certificates that prove your craft."
           />
         </div>
-
-        <h2 className=" text-2xl mt-6">A community on a creative mission</h2>
-
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full max-w-5xl mx-auto relative"
-        >
-          <CarouselContent className="-ml-4">
-            <CarouselItem className=" basis-full sm:basis-1/2 md:basis-1/3">
-              <Aboutcard
-                subtitle="VYREX transformed my editing skills. The structured learning path and community support are unmatched."
-                image={
-                  <img
-                    src={
-                      "/waist-up-portrait-smiling-contented-bespectacled-kid-standing-with-his-arms-folded-against-white-background.jpg"
-                    }
-                    alt="student"
-                    className="w-14 h-14 rounded-full object-cover"
-                  />
-                }
-                studentname="Alli Umar"
-              />
-            </CarouselItem>
-            <CarouselItem className="basis-full  sm:basis-1/2 md:basis-1/3 ">
-              <Aboutcard
-                subtitle="VYREX transformed my editing skills. The structured learning path and community support are unmatched."
-                image={
-                  <img
-                    src={
-                      "/waist-up-portrait-smiling-contented-bespectacled-kid-standing-with-his-arms-folded-against-white-background.jpg"
-                    }
-                    alt="student"
-                    className="w-14 h-14 rounded-full object-cover"
-                  />
-                }
-                studentname="Alli Umar"
-              />
-            </CarouselItem>
-            <CarouselItem className="basis-full  sm:basis-1/2 md:basis-1/3 ">
-              <Aboutcard
-                subtitle="VYREX transformed my editing skills. The structured learning path and community support are unmatched."
-                image={
-                  <img
-                    src={
-                      "/waist-up-portrait-smiling-contented-bespectacled-kid-standing-with-his-arms-folded-against-white-background.jpg"
-                    }
-                    alt="student"
-                    className="w-14 h-14 rounded-full object-cover"
-                  />
-                }
-                studentname="Alli Umar"
-              />
-            </CarouselItem>
-          </CarouselContent>
-          <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 z-10" />
-          <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 z-10" />
-        </Carousel>
 
         {/* <div className=" flex gap-4  mt-3">
         {" "}

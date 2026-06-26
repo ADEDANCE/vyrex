@@ -10,10 +10,12 @@ import Button from "../components/Button";
 import { IoIosLock } from "react-icons/io";
 import Aboutcard from "../components/Aboutcard";
 import PayButton from "../components/PayButton";
+import { useRouter } from "next/navigation";
 
 export default function Price() {
+  const router = useRouter();
   return (
-    <section className=" w-full py-10 px-6 bg-blue-50">
+    <section id="pricing" className=" w-full py-10 px-6 bg-blue-50">
       <div className=" flex flex-col justify-center items-center ">
         <h2 className=" text-black text-2xl">Level up your skill,</h2>
 
@@ -93,6 +95,7 @@ export default function Price() {
 
                 {/* button */}
                 <Button
+                  onClick={() => router.push("/Signup")}
                   children="Start your journey"
                   className=" bg-linear-to-r from-blue-500 to-blue-300 rounded-xl mt-6 w-full text-white"
                 />
