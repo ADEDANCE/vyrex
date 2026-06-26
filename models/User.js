@@ -54,6 +54,41 @@ const userSchema = new mongoose.Schema({
       default: false,
     },
   },
+
+  certificates: {
+    beginner: {
+      claimed: {
+        type: Boolean,
+        default: false,
+      },
+      claimedAt: {
+        type: Date,
+        default: null,
+      },
+    },
+
+    intermediate: {
+      claimed: {
+        type: Boolean,
+        default: false,
+      },
+      claimedAt: {
+        type: Date,
+        default: null,
+      },
+    },
+
+    expert: {
+      claimed: {
+        type: Boolean,
+        default: false,
+      },
+      claimedAt: {
+        type: Date,
+        default: null,
+      },
+    },
+  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
