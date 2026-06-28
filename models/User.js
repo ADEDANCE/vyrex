@@ -89,6 +89,14 @@ const userSchema = new mongoose.Schema({
       },
     },
   },
+
+  passwordResetToken: {
+    type: String,
+  },
+
+  passwordResetExpires: {
+    type: Date,
+  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

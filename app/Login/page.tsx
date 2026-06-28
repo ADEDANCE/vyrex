@@ -103,7 +103,10 @@ export default function Signup() {
           </div>
         </div>
       </div>
-      <Link href={""} className=" text-blue-500 hover:underline text-right ">
+      <Link
+        href={"/forgot-password"}
+        className=" text-blue-500 hover:underline text-right "
+      >
         Forgot password?
       </Link>
 
