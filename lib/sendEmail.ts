@@ -103,3 +103,52 @@ export async function sendCertificateEmail(
     `,
   });
 }
+
+export async function sendForgotPasswordEmail(
+  email: string,
+  resetLink: string,
+  name: string,
+) {
+  try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    await resend.emails.send({
+      from: "VYREX <onboarding@resend.dev>",
+      to: email,
+      subject: `Reset Your Vyrex Password`,
+      html: `
+      <h1>Hello ${name},</h1>
+
+<p>We received a request to reset your password.</p>
+
+<p>
+Click the button below to create a new password.
+</p>
+
+<a
+  href="${resetLink}"
+  style="
+    display:inline-block;
+    padding:12px 20px;
+    background:#2563eb;
+    color:#ffffff;
+    text-decoration:none;
+    border-radius:6px;
+    font-weight:bold;
+  "
+>
+  Reset Password
+</a>
+
+<p>
+If you didn't request this, you can safely ignore this email.
+</p>
+<p>
+This link expires in 15 minutes.
+</p>
+`,
+    });
+  } catch (error) {
+    console.error("EMAIL ERROR:", error);
+  }
+}
