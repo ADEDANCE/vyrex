@@ -1,14 +1,17 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import Button from "@/app/components/Button";
 import { LuCircleCheckBig } from "react-icons/lu";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-export default function page() {
+export default function Page() {
   const searchParams = useSearchParams();
   const level = searchParams.get("level");
   const router = useRouter();
+  
   return (
     <section className=" bg-linear-to-b from-blue-200 to-blue-50 w-full py-16 px-4 md:px-96">
       <div className=" flex flex-col items-center ">

@@ -4,6 +4,7 @@ import Button from "./Button";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,29 +48,42 @@ export default function Navbar() {
         </div>
 
         {/* Hamburger menu for small screens */}
-        <div className=" text-black dark:text-white flex flex-col gap-4 lg:hidden">
+        <div className=" text-black dark:text-white flex items-center justify-between lg:hidden w-full">
+          <Link href="/">
+            <Image
+              src="/images/logo.png"
+              alt="Vyrex Logo"
+              width={120}
+              height={40}
+              className="cursor-pointer"
+            />
+          </Link>
           <button onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
           </button>
-
-          {/* Mobile Menu */}
-          {isOpen && (
-            <div className="lg:hidden mt-4 flex flex-col gap-4 text-start text-black bg-white p-4 dark:bg-black dark:text-white ">
-              <Link
-                href={"/Login"}
-                className=" hover:bg-blue-200 hover:rounded-xl py-2 px-4"
-              >
-                Log in
-              </Link>
-              <Button
-                onClick={() => router.push("/Signup")}
-                children="Start learning"
-                className=" bg-blue-500 text-white rounded-2xl"
-              />
-            </div>
-          )}
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="lg:hidden mt-4 flex flex-col gap-4 text-start text-black bg-white p-4 dark:bg-black dark:text-white ">
+          <Link
+            href={"/Login"}
+            onClick={() => setIsOpen(false)}
+            className=" hover:bg-blue-200 hover:rounded-xl py-2 px-4"
+          >
+            Log in
+          </Link>
+          <Button
+            onClick={() => {
+              setIsOpen(false);
+              router.push("/Signup");
+            }}
+            children="Start learning"
+            className=" bg-blue-500 text-white rounded-2xl"
+          />
+        </div>
+      )}
     </nav>
   );
 }
