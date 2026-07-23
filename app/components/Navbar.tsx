@@ -13,6 +13,16 @@ export default function Navbar() {
     <nav className=" w-full mx-auto bg-white py-4 px-3 shadow">
       <div className=" flex justify-between items-center">
         <div className=" hidden lg:flex gap-4 text-gray-600 items-center">
+          <Link href="/">
+            <Image
+              src="/images/logo.png"
+              alt="Vyrex Logo"
+              width={120}
+              height={40}
+              className="cursor-pointer"
+            />
+          </Link>
+
           <Link
             href="/#features"
             className=" hover:bg-blue-200 hover:rounded-xl py-2 px-4"
