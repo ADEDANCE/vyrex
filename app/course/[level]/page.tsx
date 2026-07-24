@@ -214,7 +214,7 @@ export default function page() {
         {/* <div className="relative"> */}
         <video
           className="mt-7 rounded-lg w-full"
-          src={currentLesson?.videoUrl}
+          src="/placeholder.mp4"
           controls
           controlsList="nodownload"
           // prevent right click
