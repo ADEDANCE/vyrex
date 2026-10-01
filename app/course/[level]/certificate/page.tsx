@@ -149,41 +149,76 @@ export default function page() {
           Congratulations, you've earned it.
         </h1>
         <p className=" text-gray-600 text-lg text-center">
-          You just completed Editing Foundations. This is a real milestone —
-          most people never finish what they start. You did
+          This is a real milestone — most people never finish what they
+          start.But You did
         </p>
         <h3 className=" ">{user.name}</h3>
         <div className=""></div>
         <div className=" w-full md:w-2xl mt-10 bg-white border border-blue-200 shadow py-4 px-4 rounded-2xl">
-          <h2 className=" font-medium text-black text-xl">
-            Don't stop now — the next phase is where it gets serious.
-          </h2>
+      {nextLevel ? (
+  <>
+    <h2 className="font-medium text-black text-xl">
+      Don't stop now — the next phase is where it gets serious.
+    </h2>
 
-          <p>
-            You've unlocked the foundation. The {nextLevel} phase gives you
-            advanced techniques, project files, and 1:1 mentorship — the fastest
-            path from competent to undeniable.
-          </p>
+    <p>
+      You've unlocked the foundation. The {nextLevel} phase gives you
+      advanced techniques, project files, and 1:1 mentorship — the fastest
+      path from competent to undeniable.
+    </p>
+  </>
+) : (
+  <>
+    <h2 className="font-medium text-black text-xl">
+      You’ve completed the entire course — now it’s time to put it into practice.
+    </h2>
+
+    <p>
+      You’ve built your skills from the basics to advanced editing. Keep
+      practicing, take on real projects, and use what you’ve learned to create
+      work you can be proud of.
+    </p>
+  </>
+)}
 
           <div className="relative w-full" ref={certificateRef}>
             <Image
-              src="/images/certificate.png"
+              src="/images/certificatetemp.png"
               alt=""
               width={3508}
               height={2480}
               className="w-full h-auto"
             />
-            <h2 className=" text-2xl absolute top-47 left-40">
+            <h2
+              className=" text-xs md:text-2xl position: absolute
+left-[50%]
+top-[49%]
+
+-translate-x-1/2"
+            >
               {certificate?.studentName}
             </h2>
 
             <p
-              className=" absolute right-26  top-57 font-bold text-xs"
+              className=" absolute
+left-[50%]
+top-[57%]
+md:top-[58%]
+-translate-x-1/2
+w-[80%]
+text-center text-[10px]   md:text-lg"
               style={{ color: "#93C5FD" }}
             >
-              {certificate?.courseLevel} level
+              <span>for successfully completing the</span>
+              <span className=" font-bold">
+                {" "}
+                {certificate?.courseLevel} level
+              </span>
+              <span className=" ml-1">
+                of the Mobile Video Editing Course ON{" "}
+                {certificate?.completionDate}
+              </span>
             </p>
-            <p>ON {certificate?.completionDate}</p>
           </div>
 
           <div className=" flex flex-col gap-7 items-center ">
