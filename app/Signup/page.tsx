@@ -128,7 +128,7 @@ export default function Signup() {
 
         <div className=" flex text-lg">
           <p className=" text-gray-600">Already a member?</p>
-          <Link href={""} className=" text-blue-400 hover:underline">
+          <Link href={"/Login"} className=" text-blue-400 hover:underline">
             {" "}
             Log in
           </Link>
