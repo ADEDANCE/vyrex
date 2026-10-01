@@ -8,7 +8,7 @@ export const beginnerModules = [
         videoUrl: "/videos/welcome.mp4",
         duration: "4:12",
         completed: false,
-        notes: "Welcoming message",
+        notes: "Welcome to the course! In this lesson, you’ll get familiar with what the course covers, what you’ll learn, and how to get the most out of each lesson as you build your mobile video editing skills.",
         resources: "file.pdf",
       },
       {
@@ -18,7 +18,7 @@ export const beginnerModules = [
         duration: "4:12",
         completed: false,
         notes:
-          "In this lesson we explore how great editors think. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          "In this lesson, you’ll learn how viewers think and react to videos, and how editing choices like timing, visuals, sound, and transitions can keep their attention and make your videos more engaging.",
         resources: "file.pdf",
       },
       {
@@ -28,7 +28,7 @@ export const beginnerModules = [
         duration: "9:12",
         completed: false,
         notes:
-          "In this lesson we explore Video editing principle. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          "In this lesson, you’ll learn the basic principles of video editing, including how to arrange clips, control pacing, use cuts effectively, and make your videos flow naturally.",
         resources: "file.pdf",
       },
     ],
@@ -43,7 +43,7 @@ export const beginnerModules = [
         videoUrl: "/videos/Introcapcut1.mp4",
         duration: "4:12",
         completed: false,
-        notes: "Welcoming message",
+        notes: "In this lesson, you’ll get familiar with CapCut, its interface, and the basic tools you need to start editing your first video.",
         resources: "file.pdf",
       },
       {
@@ -53,7 +53,7 @@ export const beginnerModules = [
         duration: "12:12",
         completed: false,
         notes:
-          "In this lesson we explore how great editors think. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          "In this lesson, you’ll learn how to use more of CapCut’s basic tools and settings, helping you move around the app and start building your videos with confidence.",
         resources: "file.pdf",
       },
     ],
@@ -78,7 +78,7 @@ export const beginnerModules = [
         duration: "12:12",
         completed: false,
         notes:
-          "In this lesson we explore how great editors think. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          "In this lesson, you’ll learn where to find useful resources such as videos, images, music, and sound effects that can improve your edits.",
         resources: "file.pdf",
       },
     ],
@@ -93,7 +93,7 @@ export const beginnerModules = [
         videoUrl: "/videos/Script-writing1.mp4",
         duration: "4:12",
         completed: false,
-        notes: "Welcoming message",
+        notes: "In this lesson, you’ll learn a simple formula for writing video scripts that grab attention, keep viewers interested, and deliver your message clearly.",
         resources: "file.pdf",
       },
       {
@@ -103,7 +103,7 @@ export const beginnerModules = [
         duration: "4:12",
         completed: false,
         notes:
-          "In this lesson we explore how great editors think. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          "In this lesson, you’ll learn how to turn your ideas into simple, clear video scripts that are easy to follow and edit.",
         resources: "file.pdf",
       },
     ],
@@ -118,7 +118,7 @@ export const beginnerModules = [
         videoUrl: "/welcome.mp4",
         duration: "4:12",
         completed: false,
-        notes: "Welcoming message",
+        notes: "In this lesson, you’ll learn the basics of creating a slideshow video, including how to arrange images, add text, and make each slide flow smoothly.",
         resources: "file.pdf",
       },
       {
@@ -128,7 +128,7 @@ export const beginnerModules = [
         duration: "4:12",
         completed: false,
         notes:
-          "In this lesson we explore how great editors think. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          "In this lesson, you’ll learn how to improve your slideshow videos with better timing, transitions, text, and other editing elements that make them more engaging.",
         resources: "file.pdf",
       },
     ],
@@ -144,17 +144,17 @@ export const beginnerModules = [
         duration: "9:12",
         completed: false,
         notes:
-          "In this lesson we explore Video editing principle. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          "In this lesson, you’ll learn how to create a simple advert video for a brand like Smart Hub, from presenting the product or service to using visuals, text, and editing techniques to make the advert engaging.",
         resources: "file.pdf",
       },
       {
         id: 13,
-        title: "Smart hub",
+        title: "Smart hub 2",
         videoUrl: "/welcome.mp4",
         duration: "9:12",
         completed: false,
         notes:
-          "In this lesson we explore Video editing principle. Use the project files in the resources tab, and remember: cuts are about emotion before they're about technique.",
+          "In this lesson, you’ll continue working on the Smart Hub advert and learn how to refine the edit, improve the visuals, add finishing touches, and make the final video ready for the brand.",
         resources: "file.pdf",
       },
     ],
