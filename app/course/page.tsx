@@ -5,8 +5,7 @@ import PayButton from "../components/PayButton";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
 
-export default function Page() {
-  type User = {
+export default function Page() {  type User = {
     email: string;
     currentLevel?: string;
 
@@ -21,6 +20,7 @@ export default function Page() {
         paid: boolean;
         completed: boolean;
       };
+      
 
       expert: {
         paid: boolean;
