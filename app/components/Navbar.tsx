@@ -10,7 +10,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   return (
-    <nav className=" w-full mx-auto bg-white py-4 px-3 shadow">
+    <nav className=" w-full mx-auto bg-white  px-2 shadow">
       <div className=" flex justify-between items-center">
         <div className=" hidden lg:flex gap-4 text-gray-600 items-center">
           <Link href="/">
