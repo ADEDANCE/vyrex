@@ -14,7 +14,7 @@ export default function Footer() {
 
   const Legal = [
     { name: "Privacy", href: "/" },
-    { name: "Terms", href: "" },
+    { name: "Terms", href: "/Terms" },
     { name: "Contact", href: "/Contact" },
   ];
   return (
