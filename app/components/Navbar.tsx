@@ -10,9 +10,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   return (
-    <nav className=" w-full mx-auto bg-white  px-2 shadow">
+    <nav className=" w-full mx-auto bg-[#00267C] text-white  px-2 shadow">
       <div className=" flex justify-between items-center">
-        <div className=" hidden lg:flex gap-4 text-gray-600 items-center">
+        <div className=" hidden lg:flex gap-4 text-white items-center">
           <Link href="/">
             <Image
               src="/images/logo.png"
@@ -43,7 +43,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className=" hidden lg:flex gap-4 text-gray-600 items-center">
+        <div className=" hidden lg:flex gap-4 text-white items-center">
           <Link
             href={"/Login"}
             className=" hover:bg-blue-200 hover:rounded-xl py-2 px-4"
@@ -58,7 +58,7 @@ export default function Navbar() {
         </div>
 
         {/* Hamburger menu for small screens */}
-        <div className=" text-black dark:text-white flex items-center justify-between lg:hidden w-full">
+        <div className="  flex items-center justify-between lg:hidden w-full">
           <Link href="/">
             <Image
               src="/images/logo.png"
@@ -76,7 +76,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden mt-4 flex flex-col gap-4 text-start text-black bg-white p-4 dark:bg-black dark:text-white ">
+        <div className="lg:hidden mt-4 flex flex-col gap-4 text-start  bg-[#00267C] p-4  ">
           <Link
             href={"/Login"}
             onClick={() => setIsOpen(false)}
