@@ -16,7 +16,7 @@ export default function Aboutcard({
 }: CardProps) {
   return (
     <div
-      className={`w-full shadow rounded-2xl border border-gray-200 bg-white py-4 px-4  flex flex-col  
+      className={`w-full shadow rounded-2xl border border-gray-200 bg-white py-4 px-4 text-start  flex flex-col  
       ${className}
     `}
     >
