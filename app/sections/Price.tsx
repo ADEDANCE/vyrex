@@ -15,47 +15,53 @@ import { useRouter } from "next/navigation";
 export default function Price() {
   const router = useRouter();
   return (
-    <section id="pricing" className=" w-full py-10 px-6 bg-blue-50">
+    <section
+      id="pricing"
+      className=" w-full py-10 px-6 bg-[#00267C] text-white"
+    >
       <div className=" flex flex-col justify-center items-center ">
-        <h2 className=" text-black text-2xl">Level up your skill,</h2>
+        <h2 className="text-3xl">What you will learn</h2>
 
-        <h2 className=" text-2xl bg-linear-to-l  from-blue-900 to-blue-400 bg-clip-text text-transparent">
-          one stage at a time.
+        <h2 className=" text-2xl ">
+          One journey, split{" "}
+          <span className="bg-linear-to-l  from-blue-600 to-blue-400 bg-clip-text text-transparent">
+            {" "}
+            50 / 50.
+          </span>
         </h2>
-        <p className=" text-gray-600 text-center">
-          You don't just buy a course — you level up your skill. Progress
-          through three structured stages, each unlocking new techniques,
-          projects and certifications.
+        <p className="text-center">
+          Master the first half, claim your certificate, then unlock the expert
+          half. You only pay for the stage you are ready to take.
         </p>
 
-        {/* card */}
         {/* first card */}
         <div className=" w-full mt-5 flex flex-col md:flex-row gap-4">
           <div className=" w-full py-5 px-4 bg-white border border-blue-400 rounded-2xl">
             <div className=" flex justify-between items-center">
-              <div className=" bg-linear-to-bl from-blue-500 to-blue-300 flex items-center justify-center rounded-xl py-2 w-10 h-10 px-2 text-white">
-                <IoRocketSharp />
+              <div className=" bg-[#1c5ff9] px-4
+               rounded-2xl py-1">
+                 <h2 className=" text-[#cfdcfc] text-2xl font-semibold"> Start here</h2>
               </div>
-
+            
               <div className=" flex flex-col items-end">
-                <p>STEP 1</p>
-                <p className=" text-green-500">Recommended start</p>
+                <p className=" text-[#1c5ff9] font-semibold">₦5,000</p>
+                <p className=" text-gray-600">one-time payment</p>
               </div>
             </div>
 
             <div className=" text-start mt-3">
               <h3 className=" font-bold text-black">Beginner Level</h3>
-              <p className=" text-gray-600">Your launchpad into editing</p>
+              <p className=" text-gray-600 text-2xl">Editing Foundations</p>
 
-              <h2 className=" text-2xl bg-linear-to-l  from-blue-900 to-blue-400 bg-clip-text text-transparent">
-                ₦3,000
+              <h2 className=" text-gray-600">
+               Build a professional workflow from the ground up and finish with a complete, portfolio-ready edit.
               </h2>
 
               {/* content */}
-              <div className=" mt-3">
-                <div className=" flex gap-4">
+              <div className=" mt-3 text-gray-500">
+                <div className=" flex gap-4 ">
                   {/* icon */}
-                  <div className="w-5 h-5 flex items-center justify-center rounded-full bg-blue-200 text-blue-500 py-1 px-1">
+                  <div className="w-5 h-5 flex items-center justify-center rounded-full bg-blue-200 text-gray-500 py-1 px-1">
                     <MdOutlineSlowMotionVideo />
                   </div>
 
@@ -97,80 +103,14 @@ export default function Price() {
                 <Button
                   onClick={() => router.push("/Signup")}
                   children="Start your journey"
-                  className=" bg-linear-to-r from-blue-500 to-blue-300 rounded-xl mt-6 w-full text-white"
+                  className=" bg-[] rounded-xl mt-6 w-full text-white"
                 />
               </div>
             </div>
           </div>
           {/* second card */}
-          <div className=" w-full py-5 px-4 bg-white border border-blue-400 rounded-2xl">
-            <div className=" flex justify-between items-center text-gray-600">
-              <div className=" bg-gray-300  text-gray-600 flex items-center justify-center rounded-xl py-2 w-10 h-10 px-2">
-                <IoIosLock />
-              </div>
-
-              <p>STEP 2</p>
-            </div>
-
-            <div className=" text-start mt-3">
-              <h3 className=" font-bold text-black">Intermediate Level</h3>
-              <p className=" text-gray-600">
-                Sharpen real-world workflow skills
-              </p>
-
-              <h2 className=" text-2xl text-gray-500">₦3,000</h2>
-
-              {/* content */}
-              <div className=" mt-3">
-                <div className=" flex gap-4">
-                  {/* icon */}
-                  <div className="w-5 h-5 flex items-center justify-center rounded-full bg-blue-200 text-blue-500 py-1 px-1">
-                    <MdOutlineSlowMotionVideo />
-                  </div>
-
-                  {/* text */}
-                  <p>Advanced editing techniques</p>
-                </div>
-
-                <div className=" flex gap-4">
-                  {/* icon */}
-                  <div className=" w-5 h-5 flex items-center justify-center rounded-full bg-blue-200 text-blue-500 py-1 px-1">
-                    <WiStars />
-                  </div>
-
-                  {/* text */}
-                  <p>Real-world projects</p>
-                </div>
-
-                <div className=" flex gap-4">
-                  {/* icon */}
-                  <div className="w-5 h-5 flex items-center justify-center rounded-full bg-blue-200 text-blue-500 py-1 px-1">
-                    <MdOutlineFileDownload />
-                  </div>
-
-                  {/* text */}
-                  <p>More resources & assets</p>
-                </div>
-
-                <div className=" flex gap-4">
-                  {/* icon */}
-                  <div className="w-5 h-5 flex items-center justify-center rounded-full bg-blue-200 text-blue-500 py-1 px-1">
-                    <FaComments />
-                  </div>
-
-                  {/* text */}
-                  <p>Progress tracking</p>
-                </div>
-
-                {/* button */}
-                <Button
-                  children="Unlock afteer Beginner"
-                  className=" border border-gray-400 rounded-xl mt-6 w-full text-gray-500"
-                />
-              </div>
-            </div>
-          </div>
-          {/* third card */}
+        
+         
           <div className=" w-full py-5 px-4 bg-white border border-blue-400 rounded-2xl text-gray-600">
             <div className=" flex justify-between items-center">
               <div className=" bg-gray-300  text-gray-600 flex items-center justify-center rounded-xl py-2 w-10 h-10 px-2">
