@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import Button from "../components/Button";
 import Image from "next/image";
@@ -7,8 +8,9 @@ export default function Hero() {
   const router = useRouter();
 
   return (
-    <section className="w-full bg-[#00267C] text-white flex justify-between items-stretch">
-      <div className="py-6 sm:py-8 md:py-10 px-2 sm:px-3 md:px-6 flex flex-col justify-center items-center w-1/2">
+    <section className="w-full bg-[#00267C] text-white flex justify-between items-stretch overflow-hidden">
+      {/* Left: Hero Content */}
+      <div className="py-6 sm:py-8 md:py-12 px-2 sm:px-3 md:px-6 flex flex-col justify-center items-center w-1/2">
         <h1 className="text-xl sm:text-3xl md:text-5xl lg:text-6xl text-center font-bold">
           Create Amazing Videos.{" "}
           <span className="text-blue-400">
@@ -29,16 +31,22 @@ export default function Hero() {
         />
       </div>
 
-        <div className="w-1/2 relative self-stretch">
-    <Image
-      src="/images/Veditinghero.jpg"
-      alt="Mobile video editing"
-      fill
-      priority
-      sizes="50vw"
-      className="object-cover"
-    />
-  </div>
+      {/* Right: Hero Image */}
+      <div className="w-1/2 relative self-stretch p-3 sm:p-5 md:p-7 flex items-center justify-center">
+        {/* Blue Glow Behind Image */}
+        <div className="absolute inset-4 sm:inset-6 md:inset-8 rounded-3xl bg-blue-400/30 blur-2xl" />
+
+        <div className="relative z-10 w-full h-full min-h-45 sm:min-h-65 md:min-h-100 rounded-2xl md:rounded-3xl overflow-hidden border border-white/20 shadow-2xl">
+          <Image
+            src="/images/Veditinghero.jpg"
+            alt="Mobile video editing"
+            fill
+            priority
+            sizes="50vw"
+            className="object-cover"
+          />
+        </div>
+      </div>
     </section>
   );
 }
