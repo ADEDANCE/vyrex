@@ -5,7 +5,8 @@ import PayButton from "../components/PayButton";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
 
-export default function Page() {  type User = {
+export default function Page() {
+  type User = {
     email: string;
     currentLevel?: string;
 
@@ -15,8 +16,6 @@ export default function Page() {  type User = {
 
         completed: boolean;
       };
-
-      
 
       expert: {
         paid: boolean;
@@ -75,13 +74,10 @@ export default function Page() {  type User = {
                   className="w-full bg-green-500 text-white rounded-xl"
                 />
               ) : (
-                <PayButton 
-                
-                level="beginner" amount={5000} email={user.email} />
+                <PayButton level="beginner" amount={5000} email={user.email} />
               ))
             }
           />
-
 
           <CourseCard
             image="/Expert.jpg"
@@ -102,11 +98,7 @@ export default function Page() {  type User = {
                   className="w-full bg-green-500 text-white rounded-xl"
                 />
               ) : (
-                <PayButton
-                  level="expert"
-                  amount={5000}
-                  email={user.email}
-                />
+                <PayButton level="expert" amount={1000} email={user.email} />
               ))
             }
           />

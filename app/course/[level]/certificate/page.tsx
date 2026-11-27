@@ -23,7 +23,7 @@ export default function page() {
     // beginnerPaid?: boolean;
     access?: {
       beginner: boolean;
-    
+
       expert: boolean;
     };
     currentLevel?: string;
@@ -120,8 +120,8 @@ export default function page() {
 
   const prices = {
     beginner: 5000,
-  
-    expert: 5000,
+
+    expert: 1000,
   };
 
   const titles = {
@@ -154,31 +154,32 @@ export default function page() {
         <h3 className=" ">{user.name}</h3>
         <div className=""></div>
         <div className=" w-full md:w-2xl mt-10 bg-white border border-blue-200 shadow py-4 px-4 rounded-2xl">
-      {nextLevel ? (
-  <>
-    <h2 className="font-medium text-black text-xl">
-      Don't stop now — the next phase is where it gets serious.
-    </h2>
+          {nextLevel ? (
+            <>
+              <h2 className="font-medium text-black text-xl">
+                Don't stop now — the next phase is where it gets serious.
+              </h2>
 
-    <p>
-      You've unlocked the foundation. The {nextLevel} phase gives you
-      advanced techniques, project files, and 1:1 mentorship — the fastest
-      path from competent to undeniable.
-    </p>
-  </>
-) : (
-  <>
-    <h2 className="font-medium text-black text-xl">
-      You’ve completed the entire course — now it’s time to put it into practice.
-    </h2>
+              <p>
+                You've unlocked the foundation. The {nextLevel} phase gives you
+                advanced techniques, project files, and 1:1 mentorship — the
+                fastest path from competent to undeniable.
+              </p>
+            </>
+          ) : (
+            <>
+              <h2 className="font-medium text-black text-xl">
+                You’ve completed the entire course — now it’s time to put it
+                into practice.
+              </h2>
 
-    <p>
-      You’ve built your skills from the basics to advanced editing. Keep
-      practicing, take on real projects, and use what you’ve learned to create
-      work you can be proud of.
-    </p>
-  </>
-)}
+              <p>
+                You’ve built your skills from the basics to advanced editing.
+                Keep practicing, take on real projects, and use what you’ve
+                learned to create work you can be proud of.
+              </p>
+            </>
+          )}
 
           <div className="relative w-full" ref={certificateRef}>
             <Image

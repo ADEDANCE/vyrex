@@ -66,7 +66,6 @@ export async function POST(req: Request) {
     }
 
     // Prevent skipping levels
- 
 
     if (level === "expert" && !user.progress.beginner.completed) {
       return NextResponse.json({
@@ -79,8 +78,8 @@ export async function POST(req: Request) {
     let expectedAmount = 0;
 
     if (level === "beginner") expectedAmount = 5000 * 100;
-   
-    if (level === "expert") expectedAmount = 5000 * 100;
+
+    if (level === "expert") expectedAmount = 1000 * 100;
 
     // Call Paystack verification API
     const response = await fetch(
@@ -118,7 +117,6 @@ export async function POST(req: Request) {
         user.currentLevel = "beginner";
       }
 
-
       // expert
       if (level === "expert") {
         user.progress.expert.paid = true;
@@ -132,8 +130,6 @@ export async function POST(req: Request) {
       await user.save();
 
       await sendCourseAccessEmail(user.email, user.name, level);
-
-  
 
       return NextResponse.json({
         success: true,
