@@ -7,7 +7,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
 
     console.log("📧 Sending email to:", email);
     const result = await resend.emails.send({
-      from: "VYREX <onboarding@resend.dev>",
+      from: "VYREX <support@mail.vyrex.com.ng>",
       to: email,
       subject: "Welcome to VYREX ",
       html: `
@@ -42,7 +42,7 @@ export async function sendCourseAccessEmail(
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     await resend.emails.send({
-      from: "VYREX <onboarding@resend.dev>",
+      from: "VYREX <support@mail.vyrex.com.ng>",
       to: email,
       subject: `Your ${level} Level Access is Ready 🚀`,
       html: `
@@ -79,7 +79,7 @@ export async function sendCertificateEmail(
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   await resend.emails.send({
-    from: "VYREX <onboarding@resend.dev>",
+    from: "VYREX <support@mail.vyrex.com.ng>",
     to: email,
     subject: "Congratulations! You've Earned Your Certificate 🎉",
     html: `
@@ -113,7 +113,7 @@ export async function sendForgotPasswordEmail(
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     await resend.emails.send({
-      from: "VYREX <onboarding@resend.dev>",
+      from: "VYREX <support@mail.vyrex.com.ng>",
       to: email,
       subject: `Reset Your Vyrex Password`,
       html: `
