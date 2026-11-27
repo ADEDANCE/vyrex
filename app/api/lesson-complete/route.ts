@@ -1,82 +1,134 @@
+
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import User from "@/models/User";
 import { db } from "@/lib/db";
 
+type Level = "beginner" | "expert";
+
 export async function POST(req: Request) {
   try {
-    // get request data
+    //  Get request data
     const body = await req.json();
     const { level, lessonId } = body;
 
+    //  Validate level
+    if (!["beginner", "expert"].includes(level)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid level" },
+        { status: 400 }
+      );
+    }
+
+    //  Validate lessonId
+    if (
+      (typeof lessonId !== "number" && typeof lessonId !== "string") ||
+      String(lessonId).trim() === ""
+    ) {
+      return NextResponse.json(
+        { success: false, message: "Valid lessonId is required" },
+        { status: 400 }
+      );
+    }
+
     await db();
 
-    // Get user from cookie
+    // 4. Get user token from cookie
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
 
     if (!token) {
-      return NextResponse.json({ success: false, message: "Unauthorized" });
+      return NextResponse.json(
+        { success: false, message: "Unauthorized" },
+        { status: 401 }
+      );
     }
 
-    // Verify user
+    // 5. Verify token
     let decoded;
 
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET!);
     } catch {
-      return NextResponse.json({ success: false, message: "Invalid token" });
+      return NextResponse.json(
+        { success: false, message: "Invalid token" },
+        { status: 401 }
+      );
     }
 
-    // get userId
+    // 6. Get userId
     const userId = (decoded as any).userId;
 
-    // find user
+    if (!userId) {
+      return NextResponse.json(
+        { success: false, message: "Invalid user token" },
+        { status: 401 }
+      );
+    }
+
+    // 7. Find user
     const user = await User.findById(userId);
 
-    // Initialize progress if missing
+    if (!user) {
+      return NextResponse.json(
+        { success: false, message: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    // 8. Initialize progress if missing
     if (!user.progress) {
-      user.progress = {
-        beginner: { completedLessons: [], completed: false },
-        intermediate: { completedLessons: [], completed: false },
-        expert: { completedLessons: [], completed: false },
+      user.progress = {} as any;
+    }
+
+    if (!user.progress.beginner) {
+      user.progress.beginner = {
+        paid: false,
+        completedLessons: [],
+        completed: false,
       };
     }
 
-    // Add lesson if not completed before
-    const lessonArray = user.progress[level].completedLessons;
+    if (!user.progress.expert) {
+      user.progress.expert = {
+        paid: false,
+        completedLessons: [],
+        completed: false,
+      };
+    }
 
+    // 9. Get the correct lesson array
+    const lessonArray =
+      user.progress[level as Level].completedLessons;
+
+    // 10. Add lesson if not completed before
     if (!lessonArray.includes(lessonId)) {
       lessonArray.push(lessonId);
     }
 
-    // Check if ALL lessons are done
-    // const totalLessons = 10; // or dynamic from courseData
-
-    // if (lessonArray.length === totalLessons) {
-    //   user.progress[level].completed = true;
-    // }
-
-    // Unlock next level automatically
-    if (level === "beginner" && user.progress.beginner.completed) {
-      user.currentLevel = "intermediate";
-    }
-
-    if (level === "intermediate" && user.progress.intermediate.completed) {
-      user.currentLevel = "expert";
-    }
-
+    // 11. Save progress
     await user.save();
 
-    return NextResponse.json({
-      success: true,
-      progress: user.progress,
-    });
+    // 12. Return updated progress
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Lesson progress updated successfully",
+        progress: user.progress,
+      },
+      { status: 200 }
+    );
+
   } catch (error) {
-    return NextResponse.json({
-      success: false,
-      message: "Server error",
-    });
+    console.error("Lesson progress error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Server error",
+      },
+      { status: 500 }
+    );
   }
 }
