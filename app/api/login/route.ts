@@ -4,7 +4,7 @@ import { db } from "../../../lib/db";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-export async function POST(request) {
+export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { email, password } = body;
@@ -79,9 +79,9 @@ export async function POST(request) {
       { status: 200 },
     );
   } catch (error) {
-    return Response.json(
-      { success: false, error: error.message },
-      { status: 500 },
-    );
+    const message =
+      error instanceof Error ? error.message : "Something went wrong";
+
+    return Response.json({ success: false, error: message }, { status: 500 });
   }
 }
