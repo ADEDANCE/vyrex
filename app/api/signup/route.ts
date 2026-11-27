@@ -3,7 +3,7 @@ import User from "../../../models/User";
 import bcrypt from "bcrypt";
 import { sendWelcomeEmail } from "@/lib/sendEmail";
 
-export async function POST(request) {
+export async function POST(request: Request) {
   try {
     const body = await request.json();
 
