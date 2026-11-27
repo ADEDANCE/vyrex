@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     }
 
     // Validate level
-    if (!["beginner", "intermediate", "expert"].includes(level)) {
+    if (!["beginner", "expert"].includes(level)) {
       return NextResponse.json({
         success: false,
         message: "Invalid level",
@@ -66,26 +66,21 @@ export async function POST(req: Request) {
     }
 
     // Prevent skipping levels
-    if (level === "intermediate" && !user.progress.beginner.completed) {
+ 
+
+    if (level === "expert" && !user.progress.beginner.completed) {
       return NextResponse.json({
         success: false,
         message: "Complete beginner first",
       });
     }
 
-    if (level === "expert" && !user.progress.intermediate.completed) {
-      return NextResponse.json({
-        success: false,
-        message: "Complete intermediate first",
-      });
-    }
-
     // expected amount
     let expectedAmount = 0;
 
-    if (level === "beginner") expectedAmount = 3000 * 100;
-    if (level === "intermediate") expectedAmount = 3000 * 100;
-    if (level === "expert") expectedAmount = 4000 * 100;
+    if (level === "beginner") expectedAmount = 5000 * 100;
+   
+    if (level === "expert") expectedAmount = 5000 * 100;
 
     // Call Paystack verification API
     const response = await fetch(
@@ -123,11 +118,6 @@ export async function POST(req: Request) {
         user.currentLevel = "beginner";
       }
 
-      // Intermediate
-      if (level === "intermediate") {
-        user.progress.intermediate.paid = true;
-        user.currentLevel = "intermediate";
-      }
 
       // expert
       if (level === "expert") {
