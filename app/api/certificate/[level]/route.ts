@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import User from "@/models/User";
 
-type Level = "beginner" | "intermediate" | "expert";
+type Level = "beginner" | "expert";
 
 export async function GET(
   req: NextRequest,
