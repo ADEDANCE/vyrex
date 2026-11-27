@@ -24,7 +24,7 @@ type Module = {
   lessons: Lesson[];
 };
 
-type Level = "beginner" | "intermediate" | "expert";
+type Level = "beginner"  | "expert";
 export default function page() {
   const router = useRouter();
   const [courseModules, setCourseModules] = useState<Module[]>([]);
@@ -47,7 +47,6 @@ export default function page() {
 
   const level: Level | null =
     rawLevel === "beginner" ||
-    rawLevel === "intermediate" ||
     rawLevel === "expert"
       ? rawLevel
       : null;

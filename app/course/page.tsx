@@ -16,10 +16,6 @@ export default function Page() {  type User = {
         completed: boolean;
       };
 
-      intermediate: {
-        paid: boolean;
-        completed: boolean;
-      };
       
 
       expert: {
@@ -79,38 +75,13 @@ export default function Page() {  type User = {
                   className="w-full bg-green-500 text-white rounded-xl"
                 />
               ) : (
-                <PayButton level="beginner" amount={3000} email={user.email} />
+                <PayButton 
+                
+                level="beginner" amount={5000} email={user.email} />
               ))
             }
           />
 
-          <CourseCard
-            image="/Intermediate.jpg"
-            title="Intermediate"
-            subtitle="Master cuts, pacing & storytelling"
-            action={
-              user &&
-              (!user.progress.beginner.completed ? (
-                <Button
-                  children="Unlock after Beginner"
-                  disabled
-                  className="w-full bg-gray-300 text-gray-600 rounded-xl cursor-not-allowed"
-                />
-              ) : user.progress.intermediate.paid ? (
-                <Button
-                  onClick={() => router.push("/course/intermediate")}
-                  children="Continue Learning"
-                  className="w-full bg-green-500 text-white rounded-xl"
-                />
-              ) : (
-                <PayButton
-                  level="intermediate"
-                  amount={3000}
-                  email={user.email}
-                />
-              ))
-            }
-          />
 
           <CourseCard
             image="/Expert.jpg"
@@ -118,7 +89,7 @@ export default function Page() {  type User = {
             subtitle="Cinematic storytelling & transitions"
             action={
               user &&
-              (!user.progress.intermediate.completed ? (
+              (!user.progress.beginner.completed ? (
                 <Button
                   children="Unlock after Intermediate"
                   disabled
@@ -133,7 +104,7 @@ export default function Page() {  type User = {
               ) : (
                 <PayButton
                   level="expert"
-                  amount={4000}
+                  amount={5000}
                   email={user.email}
                 />
               ))

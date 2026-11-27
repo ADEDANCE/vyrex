@@ -1,9 +1,11 @@
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+
 import About from "./sections/About";
 import Faq from "./sections/Faq";
 import Hero from "./sections/Hero";
 import Price from "./sections/Price";
+import StartLearning from "./sections/StartLearning";
 import Testimony from "./sections/Testimony";
 
 export default function Home() {
@@ -12,8 +14,10 @@ export default function Home() {
       <Hero />
       <About />
       <Price />
-      <Testimony />
+      {/* <Testimony /> */}
       <Faq />
+
+      <StartLearning />
     </div>
   );
 }

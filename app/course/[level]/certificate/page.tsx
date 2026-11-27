@@ -23,14 +23,14 @@ export default function page() {
     // beginnerPaid?: boolean;
     access?: {
       beginner: boolean;
-      intermediate: boolean;
+    
       expert: boolean;
     };
     currentLevel?: string;
     completionDate?: string;
   };
 
-  type Level = "beginner" | "intermediate" | "expert";
+  type Level = "beginner" | "expert";
 
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
@@ -43,7 +43,7 @@ export default function page() {
     : params.level;
 
   // level order
-  const levelOrder: Level[] = ["beginner", "intermediate", "expert"];
+  const levelOrder: Level[] = ["beginner", "expert"];
 
   const level: Level | null = levelOrder.includes(paramsLevel as Level)
     ? (paramsLevel as Level)
@@ -119,14 +119,13 @@ export default function page() {
   }
 
   const prices = {
-    beginner: 3000,
-    intermediate: 3000,
-    expert: 4000,
+    beginner: 5000,
+  
+    expert: 5000,
   };
 
   const titles = {
     beginner: "Beginner ",
-    intermediate: "Intermediate ",
     expert: "Expert ",
   };
 
