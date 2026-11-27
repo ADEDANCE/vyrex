@@ -22,11 +22,7 @@ const userSchema = new mongoose.Schema({
       completedLessons: [Number],
       completed: { type: Boolean, default: false },
     },
-    intermediate: {
-      paid: { type: Boolean, default: false },
-      completedLessons: [Number],
-      completed: { type: Boolean, default: false },
-    },
+
     expert: {
       paid: { type: Boolean, default: false },
       completedLessons: [Number],
@@ -35,7 +31,7 @@ const userSchema = new mongoose.Schema({
   },
   currentLevel: {
     type: String,
-    enum: ["none", "beginner", "intermediate", "expert"],
+    enum: ["none", "beginner", "expert"],
     default: "none",
   },
   access: {
@@ -44,10 +40,7 @@ const userSchema = new mongoose.Schema({
       default: false,
     },
 
-    intermediate: {
-      type: Boolean,
-      default: false,
-    },
+   
 
     expert: {
       type: Boolean,
@@ -67,16 +60,7 @@ const userSchema = new mongoose.Schema({
       },
     },
 
-    intermediate: {
-      claimed: {
-        type: Boolean,
-        default: false,
-      },
-      claimedAt: {
-        type: Date,
-        default: null,
-      },
-    },
+   
 
     expert: {
       claimed: {
