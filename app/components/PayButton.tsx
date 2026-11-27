@@ -1,7 +1,7 @@
 "use client";
 
 type PayButtonProps = {
-  level: "beginner" | "intermediate" | "expert";
+  level: "beginner" | "expert";
   amount: number;
   email: string;
 };
@@ -72,10 +72,7 @@ export default function PayButton({ level, amount, email }: PayButtonProps) {
 
   return (
     <button
-      // onClick={() => {
-      //   console.log("clicked");
-      //   handlePayment();
-      // }}
+    className=" py-2 px-2 bg-blue-500 text-white rounded-xl md:rounded-2xl text-xs sm:text-sm md:text-base  w-full sm:px-5 md:px-6"
       onClick={handlePayment}
     >
       Pay Now
