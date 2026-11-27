@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 import { sendCertificateEmail } from "@/lib/sendEmail";
 import { courseData } from "@/data";
 
-type Level = "beginner" | "intermediate" | "expert";
+type Level = "beginner" | "expert";
 export async function POST(req: Request) {
   try {
     // read request body
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     const level = body.level as Level;
 
     // // Validate level
-    if (!["beginner", "intermediate", "expert"].includes(level)) {
+    if (!["beginner", "expert"].includes(level)) {
       return NextResponse.json({
         success: false,
         message: "Invalid level",
@@ -81,18 +81,6 @@ export async function POST(req: Request) {
 
     user.progress[level].completed = true;
 
-    // mark level completed
-    // if (level === "beginner") {
-    //   user.progress.beginner.completed = true;
-    // }
-
-    // if (level === "intermediate") {
-    //   user.progress.intermediate.completed = true;
-    // }
-
-    // if (level === "expert") {
-    //   user.progress.expert.completed = true;
-    // }
 
     await user.save();
 
